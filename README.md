@@ -10,18 +10,23 @@
 - `favicon.ico`
 
 ## Idées
-- Site météo + qualité de l'air + autres informations
-- API de trading
-- Intégration Spotify, Deezer, Soundcharts, Youtube mp3
-- YouTube, Twitch
-- IA ? (Explorer des fonctionnalités d'intelligence artificielle)
-- SMS
-- Sports, allimentation (+IA ?)
-- Plaque d'immatriculation/véhicule
-- Images
-- Maps
+- 🔴 Site météo + qualité de l'air + autres informations
+- 🔴 API de trading
+- 🟢 Intégration Spotify, Deezer, Soundcharts, Youtube mp3
+- 🟡 YouTube, Twitch
+- 🔴 IA ? (Explorer des fonctionnalités d'intelligence artificielle)
+- 🟡 SMS
+- 🟢 Sports, allimentation (+IA ?)
+- 🔴 Plaque d'immatriculation/véhicule
+- 🔴 Images
+- 🔴 Cybersécu
 
-# cybersécu
+### Légendes
+
+- 🟢 **Validé**
+- 🟡 **Potentiel**
+- 🔴 **Refusé**
+
 
 ### API improbables :
 - [Api génératrice d'insulte](https://rapidapi.com/Lakerolmaker/api/insult-generator/playground/5a6a1c60e4b0424ac2c3e298)
