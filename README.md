@@ -30,6 +30,11 @@
 
 ### API improbables :
 - [Api génératrice d'insulte](https://rapidapi.com/Lakerolmaker/api/insult-generator/playground/5a6a1c60e4b0424ac2c3e298)
+- Api génératrice de contenu à caractère sexuel
+
+### API inutiles :
+- Recherche d'utilisateur github
+- Affichage aléatoire d'animaux (Shibe Online)
 
 ## Sites de références
 - [Liste d'APIs gratuites sur RapidAPI](https://rapidapi.com/collection/list-of-free-apis)
