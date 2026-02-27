@@ -1,22 +1,20 @@
-#Site web pwa
+# Site web PWA
 
-##fichiers :
-- manifest.json
-- sw.js
-- index.html
-- style.css
-- script.js
-- api.js
-- favicon.ico
+## Fichiers :
+- `manifest.json`
+- `sw.js`
+- `index.html`
+- `style.css`
+- `script.js`
+- `api.js`
+- `favicon.ico`
 
-#Idées
+## Idées
+- Site météo + qualité de l'air + autres informations
+- API de trading
+- Intégration Spotify, Deezer, Soundcharts
+- YouTube, Twitch
+- IA ? (Explorer des fonctionnalités d'intelligence artificielle)
 
-- Site météo + qualité de l'air + ...etc
-- Api trading
-- Spotify, deezer, soundcharts
-- youtube, twitch
-- IA ?
-
-
-##Sites de références
-- https://rapidapi.com/collection/list-of-free-apis
+## Sites de références
+- [Liste d'APIs gratuites sur RapidAPI](https://rapidapi.com/collection/list-of-free-apis)
