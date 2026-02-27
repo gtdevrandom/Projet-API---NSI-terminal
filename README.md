@@ -6,34 +6,34 @@
 
 ## 📂 Fichiers du projet
 
-| Fichier         | Description                          |
-|-----------------|--------------------------------------|
+| Fichier         | Description                           |
+|-----------------|---------------------------------------|
 | `manifest.json` | Configuration PWA                     |
 | `sw.js`         | Service Worker                        |
 | `index.html`    | Structure principale                  |
 | `style.css`     | Styles                                |
 | `script.js`     | Logique front-end                     |
 | `api.js`        | Gestion des APIs                      |
-| `favicon.ico`   | Icône                                  |
-| `README.md`   | Résumé du projet                                  |
-| `LICENSE`   | License MIT                                  |
+| `favicon.ico`   | Icône                                 |
+| `README.md`     | Résumé du projet                        |
+| `LICENSE`       | License MIT                               |
 
 ---
 
 ## 💡 Idées d'APIs pour l'application
 
-| Statut | API / Fonctionnalité                                    |
-|--------|---------------------------------------------------------|
-| 🔴 Refusé | Site météo + qualité de l'air + autres informations |
-| 🔴 Refusé | API de trading                                        |
-| 🟢 Validé | Intégration Spotify, Deezer, Soundcharts, YouTube mp3 |
-| 🟡 Potentiel | YouTube, Twitch                                      |
+| Statut | API / Fonctionnalité                                               |
+|--------|--------------------------------------------------------------------|
+| 🔴 Refusé | Site météo + qualité de l'air + autres informations             |
+| 🔴 Refusé | API de trading                                                  |
+| 🟢 Validé | Intégration Spotify, Deezer, Soundcharts, YouTube mp3           |
+| 🟡 Potentiel | YouTube, Twitch                                              |
 | 🔴 Refusé | IA ? (Explorer des fonctionnalités d'intelligence artificielle) |
-| 🟡 Potentiel | SMS                                                 |
-| 🏆 Gagnant | Sports, alimentation (+IA ?)                           |
-| 🔴 Refusé | Plaque d'immatriculation/véhicule                     |
-| 🔴 Refusé | Images                                               |
-| 🔴 Refusé | Cybersécurité                                        |
+| 🟡 Potentiel | SMS                                                          |
+| 🏆 Gagnant | Sports, alimentation (+IA ?)                                   |
+| 🔴 Refusé | Plaque d'immatriculation/véhicule                               |
+| 🔴 Refusé | Images                                                          |
+| 🔴 Refusé | Cybersécurité                                                   |
 
 **Légende :**  
 - 🟢 Validé  
