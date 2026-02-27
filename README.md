@@ -19,6 +19,7 @@
 - Sports, allimentation (+IA ?)
 - Plaque d'immatriculation/véhicule
 - Images
+- Maps
 
 ### API improbables :
 - [Api génératrice d'insulte](https://rapidapi.com/Lakerolmaker/api/insult-generator/playground/5a6a1c60e4b0424ac2c3e298)
