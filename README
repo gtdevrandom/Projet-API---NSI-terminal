@@ -1,6 +1,6 @@
-# Site web pwa
+#Site web pwa
 
-## fichiers :
+##fichiers :
 - manifest.json
 - sw.js
 - index.html
@@ -9,7 +9,7 @@
 - api.js
 - favicon.ico
 
-# Idées
+#Idées
 
 - Site météo + qualité de l'air + ...etc
 - Api trading
@@ -18,4 +18,5 @@
 - IA ?
 
 
-#https://rapidapi.com/collection/list-of-free-apis
+##Sites de références
+- https://rapidapi.com/collection/list-of-free-apis
