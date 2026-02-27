@@ -1,4 +1,4 @@
-# Site web PWA
+# Site web PWA "UniWave"
 
 ## Fichiers :
 - `manifest.json`
