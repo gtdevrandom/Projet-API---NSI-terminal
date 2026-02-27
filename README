@@ -1,1 +1,20 @@
+# Site web pwa
+
+## fichiers :
+- manifest.json
+- sw.js
+- index.html
+- style.css
+- script.js
+- api.js
+- favicon.ico
+
+# Idées
+
+- Site météo + qualité de l'air + ...etc
+- Api trading
+- Spotify, deezer, soundcharts
+- youtube, twitch
+- IA ?
+
 
