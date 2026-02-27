@@ -2,7 +2,7 @@
 
 **KaliFit** est une Progressive Web App (PWA) dédiée à la **nutrition, la performance sportive et l’optimisation intelligente**.
 
----
+**KaliFit** vient de **Kalos Fitness**, qui signifie “beauté et perfection” en grec, combiné avec **Fit** pour le fitness et la performance.
 
 ## 📂 Fichiers du projet
 
