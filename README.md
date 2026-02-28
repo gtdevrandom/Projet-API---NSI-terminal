@@ -13,7 +13,8 @@ Table des matieres
 3. [APIs et Services utilises](#apis-et-services-utilises)
 4. [Fonctionnalites de KaliFit](#fonctionnalites-de-kalifit)
 5. [APIs improbables et inutiles](#apis-improbables-et-inutiles)
-6. [References et Licence](#references-et-licence)
+6. [Maquette et Logo](#maquette-et-logo)
+7. [References et Licence](#references-et-licence)
 
 ---
 
@@ -116,8 +117,16 @@ Inutiles :
 
 ---
 
+Maquette et Logo
+----------------
+
+- Une maquette fonctionnelle de l'application a ete realisee sur Figma.
+- Le logo de KaliFit a ete genere avec une intelligence artificielle.
+
+---
+
 References et Licence
 --------------------
 
 - Liste d'APIs gratuites : RapidAPI
-- Licence : Ce projet est sous licence MIT
+- Licence : Ce projet est sous [license](LICENSE) MIT
