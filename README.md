@@ -1,163 +1,100 @@
 # KaliFit — PWA Fitness & Nutrition Intelligence
 
-**KaliFit** est une Progressive Web App (PWA) dédiée à la **nutrition, la performance sportive et l’optimisation intelligente**.
+**KaliFit** est une Progressive Web App (PWA) dédiée à la nutrition, la performance sportive et l’optimisation intelligente. Le nom **KaliFit** provient de *Kalos Fitness* (beauté et perfection en grec) combiné avec *Fit* (fitness et performance).
 
-**KaliFit** vient de **Kalos Fitness**, qui signifie “beauté et perfection” en grec, combiné avec **Fit** pour le fitness et la performance.
+---
+
+## Table des matières
+1. [Fichiers du projet](#fichiers-du-projet)
+2. [Idées d'APIs et Stratégie](#idées-dapis-et-stratégie)
+3. [APIs et Services utilisés](#apis-et-services-utilisés)
+4. [Fonctionnalités de KaliFit](#fonctionnalités-de-kalifit)
+5. [APIs improbables et inutiles](#apis-improbables-et-inutiles)
+6. [Références et Licence](#références-et-licence)
+
+---
 
 ## 📂 Fichiers du projet
 
-| Fichier         | Description                           |
-|-----------------|---------------------------------------|
-| `manifest.json` | Configuration PWA                     |
-| `sw.js`         | Service Worker                        |
-| `index.html`    | Structure principale                  |
-| `style.css`     | Styles                                |
-| `script.js`     | Logique front-end                     |
-| `api.js`        | Gestion des APIs                      |
-| `favicon.ico`   | Icône                                 |
-| `README.md`     | Résumé du projet                        |
-| `LICENSE`       | License MIT                               |
+| Fichier | Description |
+| :--- | :--- |
+| `manifest.json` | Configuration PWA |
+| `sw.js` | Service Worker |
+| `index.html` | Structure principale |
+| `style.css` | Styles |
+| `script.js` | Logique front-end |
+| `api.js` | Gestion des APIs |
+| `favicon.ico` | Icône |
+| `README.md` | Résumé du projet |
+| `LICENSE` | License MIT |
 
 ---
 
-## 💡 Idées d'APIs pour l'application
+## 💡 Idées d'APIs et Stratégie
 
-| Statut | API / Fonctionnalité                                               |
-|--------|--------------------------------------------------------------------|
-| 🔴 Refusé | Site météo + qualité de l'air + autres informations             |
-| 🔴 Refusé | API de trading                                                  |
-| 🟢 Validé | Intégration Spotify, Deezer, Soundcharts, YouTube mp3           |
-| 🟡 Potentiel | YouTube, Twitch                                              |
+| Statut | API / Fonctionnalité |
+| :--- | :--- |
+| 🔴 Refusé | Site météo + qualité de l'air + autres informations |
+| 🔴 Refusé | API de trading |
+| 🟢 Validé | Intégration Spotify, Deezer, Soundcharts, YouTube mp3 |
+| 🟡 Potentiel | YouTube, Twitch |
 | 🔴 Refusé | IA ? (Explorer des fonctionnalités d'intelligence artificielle) |
-| 🟡 Potentiel | SMS                                                          |
-| 🏆 Gagnant | Sports, alimentation (+IA ?)                                   |
-| 🔴 Refusé | Plaque d'immatriculation/véhicule                               |
-| 🔴 Refusé | Images                                                          |
-| 🔴 Refusé | Cybersécurité                                                   |
+| 🟡 Potentiel | SMS |
+| 🏆 Gagnant | Sports, alimentation (+IA ?) |
+| 🔴 Refusé | Plaque d'immatriculation / véhicule |
+| 🔴 Refusé | Images |
+| 🔴 Refusé | Cybersécurité |
 
-**Légende :**  
-- 🟢 Validé  
-- 🟡 Potentiel  
-- 🔴 Refusé
-- 🏆 Gagnant
+**Légende :** 🟢 Validé | 🟡 Potentiel | 🔴 Refusé | 🏆 Gagnant
 
 ---
 
-## ⚠️ APIs improbables
-
-- API génératrice d'insulte : [Insult Generator](https://rapidapi.com/Lakerolmaker/api/insult-generator/playground/5a6a1c60e4b0424ac2c3e298)  
-- API génératrice de contenu à caractère sexuel
-
----
-
-## 🗑️ APIs inutiles
-
-- Recherche d'utilisateur GitHub  
-- Affichage aléatoire d'animaux (Shibe Online)
-
----
-
-## 🌐 Sites de référence
-
-- Liste d'APIs gratuites sur RapidAPI : [RapidAPI Free APIs](https://rapidapi.com/collection/list-of-free-apis)
-## API et Services Utilisés
+## 🛠️ APIs et Services utilisés
 
 KaliFit repose sur une architecture robuste, privilégiant la sécurité des données et l'absence d'exposition de clés secrètes côté client.
 
----
-
 ### Résumé des services
-
-1. OpenFoodFacts
-   - Rôle : Recherche & Données nutritionnelles
-   - Authentification : Publique (Sans clé)
-
-2. WGER
-   - Rôle : Exercices & Routines fitness
-   - Authentification : OAuth2 (Session utilisateur)
-
-3. Google Gemini
-   - Rôle : Coach IA & Analyse prédictive
-   - Authentification : Firebase Auth (Proxy Serverless)
-
----
+1. **OpenFoodFacts** : Recherche & Données nutritionnelles (Publique, sans clé).
+2. **WGER** : Exercices & Routines fitness (OAuth2, session utilisateur).
+3. **Google Gemini** : Coach IA & Analyse prédictive (Firebase Auth, via Proxy Serverless).
 
 ### Détails techniques
+* **OpenFoodFacts (Nutrition)** : Base de données mondiale. Usage : Recherche par nom ou scan code-barres. Accès libre.
+* **WGER (Sport)** : Accès à une bibliothèque d'exercices et suivi des performances. Authentification via OAuth2 pour préserver la vie privée.
+* **Google Gemini (IA)** : Génération de conseils et analyse de stagnation. 
+    * *Architecture sécurisée* : Le front-end envoie la requête à une **Firebase Cloud Function**. Celle-ci vérifie l'identité via Firebase Auth, appelle l'API Gemini via une variable d'environnement sécurisée, et ne renvoie que la réponse.
 
-#### 1. OpenFoodFacts (Nutrition)
-Base de données mondiale et collaborative sur les produits alimentaires.
-- Usage : Recherche par nom ou scan de code-barres pour récupérer les macros (protéines, glucides, lipides).
-- Pourquoi : Accès libre, aucune gestion de clé requise, idéal pour une intégration rapide et légère en PWA.
-
-#### 2. WGER (Sport)
-API communautaire dédiée au fitness et à la musculation.
-- Usage : Accès à une vaste bibliothèque d'exercices, création de programmes et suivi des performances.
-- Authentification : Utilise le flux OAuth2. L'utilisateur se connecte directement via son compte WGER, garantissant que les données de progression restent privées et liées à son profil sans que KaliFit ne stocke de jetons sensibles.
-
-#### 3. Google Gemini (Intelligence Artificielle)
-Moteur de génération de texte et d'analyse de données pour le coaching.
-- Usage : Génération de conseils nutritionnels, ajustements de programmes et analyse de stagnation.
-- Architecture sécurisée : Pour éviter d'exposer les clés API dans le navigateur, KaliFit utilise Firebase Cloud Functions.
-  - Le front-end envoie la requête à la fonction Firebase.
-  - La fonction vérifie l'identité de l'utilisateur (Firebase Auth).
-  - La fonction appelle l'API Gemini via une variable d'environnement sécurisée.
-  - Seule la réponse est renvoyée au front-end.
+*Note de sécurité : Aucune clé API sensible n'est présente côté client.*
 
 ---
-
-Note sur la sécurité : Aucune clé API sensible n'est présente dans le code source de l'application (côté client). KaliFit respecte les bonnes pratiques de développement en déportant la logique sécurisée sur des fonctions serveur (Serverless).
 
 ## 🚀 Fonctionnalités de KaliFit
 
-### 1️⃣ Profil biométrique intelligent
-- Poids, taille, âge, sexe  
-- Objectif (prise de masse, sèche, performance, santé)  
-- Calcul automatique BMR / TDEE  
-- Ajustement dynamique selon progression  
-
-### 2️⃣ Tracker nutrition automatique
-- Scan ou recherche d’aliments  
-- Calcul macros (protéines, lipides, glucides)  
-- Analyse micronutriments  
-- Score qualité alimentaire journalier  
-
-### 3️⃣ Recommandations repas personnalisées (IA)
-- Basées sur : objectif, entraînement du jour, déficit/surplus calorique  
-- Adaptation en temps réel  
-
-### 4️⃣ Planification hebdomadaire intelligente
-- Planning repas + entraînements synchronisés  
-- Ajustement automatique si séance manquée  
-- Génération liste de courses optimisée  
-
-### 5️⃣ Corrélation sport ↔ nutrition ↔ récupération
-- Analyse performance sportive, apport calorique, sommeil  
-- Détection de sous-alimentation ou surentraînement  
-
-### 6️⃣ Coach IA conversationnel
-- Exemples : “Que dois-je manger après cette séance ?”, “Pourquoi je stagne ?”  
-- Réponses contextualisées selon données utilisateur  
-
-### 7️⃣ Score de récupération
-- Basé sur charge d’entraînement, apport nutritionnel, hydratation, sommeil  
-- Indice simple 0–100  
-
-### 8️⃣ Suggestions d’optimisation
-- Exemples : “Augmente tes protéines de 15g”, “Ton déficit est trop agressif”  
-
-### 9️⃣ Objectifs dynamiques
-- Ajustement automatique des calories  
-- Révision des macros selon progression réelle  
-- Adaptation après stagnation  
-
-### 🔟 Dashboard analytics avancé
-- Évolution poids  
-- Ratio performance/calories  
-- Heatmap entraînements  
-- Graphiques macro-nutriments
+1. **Profil biométrique intelligent** : Poids, taille, âge, sexe, objectif, calcul BMR/TDEE.
+2. **Tracker nutrition automatique** : Scan, macros, micronutriments et score qualité.
+3. **Recommandations repas (IA)** : Adaptées à l'entraînement du jour et aux objectifs.
+4. **Planification hebdomadaire intelligente** : Planning repas/entraînement avec ajustement auto.
+5. **Corrélation globale** : Analyse sport/nutrition/sommeil pour éviter le surentraînement.
+6. **Coach IA conversationnel** : Réponses contextualisées aux questions utilisateur.
+7. **Score de récupération** : Indice 0–100 basé sur la charge et le repos.
+8. **Suggestions d’optimisation** : Conseils précis (ex: +15g protéines).
+9. **Objectifs dynamiques** : Ajustement automatique des calories selon la progression.
+10. **Dashboard analytics avancé** : Évolution poids, ratio performance/calories, heatmap.
 
 ---
 
-## 📜 Licence
+## ⚠️ APIs improbables et inutiles
 
-Ce projet est sous licence [MIT](LICENSE). Consultez le fichier `LICENSE` pour plus de détails.
+**Improbables :**
+* API génératrice d'insulte : [Insult Generator](https://rapidapi.com/Lakerolmaker/api/insult-generator/playground/5a6a1c60e4b0424ac2c3e298)
+* API génératrice de contenu à caractère sexuel
+
+**Inutiles :**
+* Recherche d'utilisateur GitHub
+* Affichage aléatoire d'animaux (Shibe Online)
+
+---
+
+## 🌐 Références et Licence
+* Liste d'APIs gratuites sur RapidAPI : [RapidAPI Free APIs](https://rapidapi.com/collection/list-of-free-apis)
+* Licence : Ce projet est sous licence [MIT](LICENSE).
