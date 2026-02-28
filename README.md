@@ -122,6 +122,7 @@ Maquette et Logo
 
 - Une maquette fonctionnelle de l'application a ete realisee sur Figma.
 - Le logo de KaliFit a ete genere avec une intelligence artificielle.
+- Aperçu de la maquette : ![Maquette KaliFit](maquette_figma/app.png)
 
 ---
 
