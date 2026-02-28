@@ -1,20 +1,34 @@
 {
   "short_name": "KaliFit",
-  "name": "KaliFit",
+  "name": "KaliFit - Fitness & Nutrition",
+  "description": "Application d'entraînement physique et de nutrition",
   "icons": [
     {
       "src": "./images/logo-192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "./images/logo-512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "theme_color": "#00c9b1",
-  "background_color": "#f2f2f2"
+  "background_color": "#f2f2f2",
+  "shortcuts": [
+    {
+      "name": "Accueil",
+      "short_name": "Accueil",
+      "description": "Aller à la page d'accueil",
+      "url": "./",
+      "icons": [{ "src": "./images/logo-192.png", "sizes": "192x192" }]
+    }
+  ]
 }

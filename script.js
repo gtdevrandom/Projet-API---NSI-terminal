@@ -1,3 +1,7 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   var navItems = document.querySelectorAll('.nav-item');
   var screens = document.querySelectorAll('.screen');
