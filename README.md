@@ -60,8 +60,52 @@
 ## 🌐 Sites de référence
 
 - Liste d'APIs gratuites sur RapidAPI : [RapidAPI Free APIs](https://rapidapi.com/collection/list-of-free-apis)
+## API et Services Utilisés
+
+KaliFit repose sur une architecture robuste, privilégiant la sécurité des données et l'absence d'exposition de clés secrètes côté client.
 
 ---
+
+### Résumé des services
+
+1. OpenFoodFacts
+   - Rôle : Recherche & Données nutritionnelles
+   - Authentification : Publique (Sans clé)
+
+2. WGER
+   - Rôle : Exercices & Routines fitness
+   - Authentification : OAuth2 (Session utilisateur)
+
+3. Google Gemini
+   - Rôle : Coach IA & Analyse prédictive
+   - Authentification : Firebase Auth (Proxy Serverless)
+
+---
+
+### Détails techniques
+
+#### 1. OpenFoodFacts (Nutrition)
+Base de données mondiale et collaborative sur les produits alimentaires.
+- Usage : Recherche par nom ou scan de code-barres pour récupérer les macros (protéines, glucides, lipides).
+- Pourquoi : Accès libre, aucune gestion de clé requise, idéal pour une intégration rapide et légère en PWA.
+
+#### 2. WGER (Sport)
+API communautaire dédiée au fitness et à la musculation.
+- Usage : Accès à une vaste bibliothèque d'exercices, création de programmes et suivi des performances.
+- Authentification : Utilise le flux OAuth2. L'utilisateur se connecte directement via son compte WGER, garantissant que les données de progression restent privées et liées à son profil sans que KaliFit ne stocke de jetons sensibles.
+
+#### 3. Google Gemini (Intelligence Artificielle)
+Moteur de génération de texte et d'analyse de données pour le coaching.
+- Usage : Génération de conseils nutritionnels, ajustements de programmes et analyse de stagnation.
+- Architecture sécurisée : Pour éviter d'exposer les clés API dans le navigateur, KaliFit utilise Firebase Cloud Functions.
+  - Le front-end envoie la requête à la fonction Firebase.
+  - La fonction vérifie l'identité de l'utilisateur (Firebase Auth).
+  - La fonction appelle l'API Gemini via une variable d'environnement sécurisée.
+  - Seule la réponse est renvoyée au front-end.
+
+---
+
+Note sur la sécurité : Aucune clé API sensible n'est présente dans le code source de l'application (côté client). KaliFit respecte les bonnes pratiques de développement en déportant la logique sécurisée sur des fonctions serveur (Serverless).
 
 ## 🚀 Fonctionnalités de KaliFit
 
