@@ -1,19 +1,19 @@
 KaliFit — PWA Fitness & Nutrition Intelligence
 ==============================================
 
-KaliFit est une Progressive Web App (PWA) dédiée à la nutrition, la performance sportive et l’optimisation intelligente.
-Le nom KaliFit provient de Kalos Fitness (beauté et perfection en grec) combiné avec Fit (fitness et performance).
+KaliFit est une Progressive Web App (PWA) dediee a la nutrition, la performance sportive et l'optimisation intelligente.
+Le nom KaliFit provient de Kalos Fitness (beaute et perfection en grec) combine avec Fit (fitness et performance).
 
 ---
 
-Table des matières
+Table des matieres
 -----------------
 1. [Fichiers du projet](#fichiers-du-projet)
-2. [Idées d'APIs et Stratégie](#idées-dapis-et-strategie)
-3. [APIs et Services utilisés](#apis-et-services-utilises)
-4. [Fonctionnalités de KaliFit](#fonctionnalites-de-kalifit)
+2. [Idees d'APIs et Strategie](#idees-dapis-et-strategie)
+3. [APIs et Services utilises](#apis-et-services-utilises)
+4. [Fonctionnalites de KaliFit](#fonctionnalites-de-kalifit)
 5. [APIs improbables et inutiles](#apis-improbables-et-inutiles)
-6. [Références et Licence](#references-et-licence)
+6. [References et Licence](#references-et-licence)
 
 ---
 
@@ -28,78 +28,78 @@ index.html             | Structure principale
 style.css              | Styles
 script.js              | Logique front-end
 api.js                 | Gestion des APIs
-favicon.ico            | Icône
-README.md              | Résumé du projet
+favicon.ico            | Icone
+README.md              | Resume du projet
 LICENSE                | Licence MIT
 
 ---
 
-Idées d'APIs et Stratégie
+Idees d'APIs et Strategie
 -------------------------
 
-Statut  | API / Fonctionnalité
+Statut  | API / Fonctionnalite
 ------- | --------------------
-Refusé  | Site météo + qualité de l'air + autres informations
-Refusé  | API de trading
-Validé  | Intégration Spotify, Deezer, Soundcharts, YouTube mp3
+Refuse  | Site meteo + qualite de l'air + autres informations
+Refuse  | API de trading
+Valide  | Integration Spotify, Deezer, Soundcharts, YouTube mp3
 Potentiel | YouTube, Twitch
-Refusé  | IA ? (Explorer des fonctionnalités d'intelligence artificielle)
+Refuse  | IA ? (Explorer des fonctionnalites d'intelligence artificielle)
 Potentiel | SMS
 Gagnant  | Sports, alimentation (+IA ?)
-Refusé  | Plaque d'immatriculation / véhicule
-Refusé  | Images
-Refusé  | Cybersécurité
+Refuse  | Plaque d'immatriculation / vehicule
+Refuse  | Images
+Refuse  | Cybersecurite
 
-Légende : Validé | Potentiel | Refusé | Gagnant
+Legende : Valide | Potentiel | Refuse | Gagnant
 
 ---
 
-APIs et Services utilisés
+APIs et Services utilises
 ------------------------
 
-KaliFit repose sur une architecture robuste, privilégiant la sécurité des données et l'absence d'exposition de clés secrètes côté client.
+KaliFit repose sur une architecture robuste, privilegiant la securite des donnees et l'absence d'exposition de cles secretes cote client.
 
-Résumé des services
-1. OpenFoodFacts : Recherche & Données nutritionnelles (publique, sans clé)
+Resume des services
+1. OpenFoodFacts : Recherche & Donnees nutritionnelles (publique, sans cle)
 2. WGER : Exercices & Routines fitness (OAuth2, session utilisateur)
-3. Google Gemini : Coach IA & Analyse prédictive (Firebase Auth, via Proxy Serverless)
+3. Google Gemini : Coach IA & Analyse predictive (Firebase Auth, via Proxy Serverless)
 
-Détails techniques
+Details techniques
 - OpenFoodFacts (Nutrition)
-  Base de données mondiale.
+  Base de donnees mondiale.
   Usage : Recherche par nom ou scan code-barres.
-  Accès libre.
+  Acces libre.
 
 - WGER (Sport)
-  Accès à une bibliothèque d'exercices et suivi des performances.
-  Authentification via OAuth2 pour préserver la vie privée.
+  Acces a une bibliotheque d'exercices et suivi des performances.
+  Authentification via OAuth2 pour preserver la vie privee.
 
 - Google Gemini (IA)
-  Génération de conseils et analyse de stagnation.
+  Generation de conseils et analyse de stagnation.
   
-  Architecture sécurisée :
-  - Le front-end envoie la requête à une Firebase Cloud Function
-  - Vérification d'identité via Firebase Auth
-  - Appel de l'API Gemini via variable d'environnement sécurisée
-  - Retour uniquement de la réponse traitée
+  Architecture securisee :
+  - Le front-end envoie la requete a une Firebase Cloud Function
+  - Verification d'identite via Firebase Auth
+  - Appel de l'API Gemini via variable d'environnement securisee
+  - Retour uniquement de la reponse traitee
 
-Note de sécurité : Aucune clé API sensible n'est présente côté client.
+Note de securite : Aucune cle API sensible n'est presente cote client.
 
 ---
 
-Fonctionnalités de KaliFit
+Fonctionnalites de KaliFit
 --------------------------
 
-1. Profil biométrique intelligent : Poids, taille, âge, sexe, objectif, calcul BMR/TDEE
-2. Tracker nutrition automatique : Scan, macros, micronutriments et score qualité
-3. Recommandations repas (IA) : Adaptées à l'entraînement du jour et aux objectifs
-4. Planification hebdomadaire intelligente : Planning repas/entraînement avec ajustement automatique
-5. Corrélation globale : Analyse sport/nutrition/sommeil pour éviter le surentraînement
-6. Coach IA conversationnel : Réponses contextualisées aux questions utilisateur
-7. Score de récupération : Indice 0–100 basé sur la charge et le repos
-8. Suggestions d’optimisation : Conseils précis (ex : +15g protéines)
+1. Profil biometrque intelligent : Poids, taille, age, sexe, objectif, calcul BMR/TDEE
+2. Tracker nutrition automatique : Scan, macros, micronutriments et score qualite
+3. Recommandations repas (IA) : Adaptees a l'entrainement du jour et aux objectifs
+4. Planification hebdomadaire intelligente : Planning repas/entrainement avec ajustement automatique
+5. Correlation globale : Analyse sport/nutrition/sommeil pour eviter le surentrainement
+6. Coach IA conversationnel : Reponses contextualisees aux questions utilisateur
+7. Score de recuperation : Indice 0-100 base sur la charge et le repos
+8. Suggestions d’optimisation : Conseils precis (ex : +15g proteines)
 9. Objectifs dynamiques : Ajustement automatique des calories selon la progression
-10. Dashboard analytics avancé : Évolution poids, ratio performance/calories, heatmap
+10. Dashboard analytics avance : Evolution poids, ratio performance/calories, heatmap
 
 ---
 
@@ -107,16 +107,16 @@ APIs improbables et inutiles
 ---------------------------
 
 Improbables :
-- API génératrice d'insulte
-- API génératrice de contenu à caractère sexuel
+- API generatrice d'insulte
+- API generatrice de contenu a caractere sexuel
 
 Inutiles :
 - Recherche d'utilisateur GitHub
-- Affichage aléatoire d'animaux
+- Affichage aleatoire d'animaux
 
 ---
 
-Références et Licence
+References et Licence
 --------------------
 
 - Liste d'APIs gratuites : RapidAPI
