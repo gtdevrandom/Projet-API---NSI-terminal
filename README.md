@@ -120,9 +120,9 @@ Inutiles :
 Maquette et Logo
 ----------------
 
-- Une maquette fonctionnelle de l'application a ete realisee sur Figma.
+- Une [maquette](maquette_figma/) fonctionnelle de l'application a ete realisee sur Figma.
 - Le logo de KaliFit a ete genere avec une intelligence artificielle.
-- Aperçu de la maquette : ![Maquette KaliFit](maquette_figma/app.png)
+- Aperçu de la maquette : ![Maquette KaliFit](maquette_figma/app.png)![Maquette KaliFit](maquette_figma/pop_up.png)
 
 ---
 
