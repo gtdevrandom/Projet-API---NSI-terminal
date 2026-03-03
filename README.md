@@ -129,5 +129,5 @@ Maquette et Logo
 References et Licence
 --------------------
 
-- Liste d'APIs gratuites : RapidAPI
+- Liste d'APIs gratuites : [RapidAPI](https://rapidapi.com/)
 - Licence : Ce projet est sous [license](LICENSE) MIT
