@@ -104,6 +104,17 @@ Fonctionnalites de KaliFit
 
 ---
 
+Objectifs :
+-----------
+- Connecter trois api différentes **(1/3)**
+- ~~Différents thèmes~~
+- ~~application téléchargeable~~
+- Optimisation Openfoodfact
+- Ajout license sur le site
+- Création logo 
+
+---
+
 APIs improbables et inutiles
 ---------------------------
 
@@ -121,7 +132,7 @@ Maquette et Logo
 ----------------
 
 - Une [maquette](maquette_figma/) fonctionnelle de l'application a ete realisee sur Figma.
-- Le logo de KaliFit a ete genere avec une intelligence artificielle.
+- Le logo de KaliFit a ete genere sur [drawio](https://draw.io).
 - Aperçu de la maquette : ![Maquette KaliFit](maquette_figma/app.png)![Maquette KaliFit](maquette_figma/pop_up.png)
 
 ---

@@ -2,7 +2,6 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').catch(() => {});
 }
 
-// Utility: LocalStorage with defaults
 const storage = {
   get: (key, defaults = {}) => {
     const data = localStorage.getItem(key);
@@ -11,22 +10,32 @@ const storage = {
   set: (key, data) => localStorage.setItem(key, JSON.stringify(data))
 };
 
-// Theme configs
+// Themes
 const THEMES = {
   light: {
     bg: '#f2f2f2', text: '#000000', cardBg: '#ffffff', cardBorder: '#e0e0e0',
-    inputBg: '#ffffff', inputBorder: '#d0d0d0', primary: '#00c9b1', border: '#d0d0d0', gridLine: '#e0e0e0'
+    inputBg: '#ffffff', inputBorder: '#d0d0d0', primary: '#d400ffff', border: '#d0d0d0', gridLine: '#e0e0e0'
   },
   dark: {
     bg: '#1a1a1a', text: '#ffffff', cardBg: '#2d2d2d', cardBorder: '#444',
-    inputBg: '#333', inputBorder: '#555', primary: '#00c9b1', border: '#555', gridLine: '#444'
+    inputBg: '#333', inputBorder: '#555', primary: '#d400ffff', border: '#555', gridLine: '#444'
   }
+};
+
+// Couleur secondaire
+const SECONDARY_COLORS = {
+  teal: '#00c9b1',
+  blue: '#2196F3',
+  purple: '#d400ffff',
+  green: '#4CAF50',
+  orange: '#FF9800',
+  red: '#f44336',
+  pink: '#E91E63'
 };
 
 //a delete dans le futur
 async function clearSiteCache() {
 
-  // Supprimer les caches (Service Worker)
   if ('caches' in window) {
     const cacheNames = await caches.keys();
     await Promise.all(
@@ -34,19 +43,15 @@ async function clearSiteCache() {
     );
   }
 
-  // Supprimer le localStorage
   localStorage.clear();
 
-  // Supprimer le sessionStorage
   sessionStorage.clear();
 
   alert("Cache vidé ! La page va se recharger.");
 
-  // Rechargement forcé
   window.location.reload(true);
 }
 
-// Get/Set helpers
 const getWeightData = () => storage.get('weightData', []);
 const getSleepData = () => storage.get('sleepData', []);
 const getGoals = () => storage.get('goals', {
@@ -54,7 +59,7 @@ const getGoals = () => storage.get('goals', {
   weightStart: null, fatStart: null, muscleStart: null
 });
 const getSettings = () => storage.get('settings', {
-  firstname: '', lastname: '', height: '', birthYear: '', theme: 'light', dateFormat: 'fr'
+  firstname: '', lastname: '', height: '', birthYear: '', theme: 'light', dateFormat: 'fr', secondaryColor: '#d400ffff'
 });
 
 function getChartConfig() {
@@ -62,35 +67,30 @@ function getChartConfig() {
   return THEMES[theme];
 }
 
-// Save helpers with callbacks
 const save = {
   weight: data => { storage.set('weightData', data); refreshWeightChart(); displayGoals(); displayHomeScreen(); },
   sleep: data => { storage.set('sleepData', data); refreshSleepChart(); displayHomeScreen(); },
   goals: data => { storage.set('goals', data); displayGoals(); },
-  settings: data => { storage.set('settings', data); applyTheme(data.theme); refreshAllGraphs(); displayHomeScreen(); }
+  settings: data => { storage.set('settings', data); applyTheme(data.theme, data.secondaryColor); refreshAllGraphs(); displayHomeScreen(); }
 };
 
-// Utility: Format sleep time
 const formatTime = decHours => {
   const h = Math.floor(decHours), m = Math.round((decHours - h) * 60);
   return h + 'h' + String(m).padStart(2, '0');
 };
 
-// Utility: Calculate BMI
 const calculateBMI = (weightKg, heightCm) => {
   if (!weightKg || !heightCm) return null;
   const heightM = heightCm / 100;
   return (weightKg / (heightM * heightM)).toFixed(1);
 };
 
-// Modal helpers
 const modal = {
   open: (id) => { document.getElementById(id).classList.add('active'); },
   close: (id) => { document.getElementById(id).classList.remove('active'); },
   closeAll: () => { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
 };
 
-// Weight functions
 function openWeightChart() {
   modal.open('weight-modal');
   setTimeout(() => drawWeightChart(), 100);
@@ -139,7 +139,6 @@ function drawWeightChart() {
   const ctx = canvas.getContext('2d');
   const config = getChartConfig();
 
-  // Clear canvas
   canvas.width = canvas.offsetWidth;
   canvas.height = 250;
 
@@ -160,7 +159,6 @@ function drawWeightChart() {
   const maxWeight = Math.max(...data.map(d => d.value)) + 2;
   const weightRange = maxWeight - minWeight;
 
-  // Draw grid
   ctx.strokeStyle = config.gridLine;
   ctx.lineWidth = 1;
   for (let i = 0; i <= 4; i++) {
@@ -171,7 +169,6 @@ function drawWeightChart() {
     ctx.stroke();
   }
 
-  // Draw line chart
   ctx.strokeStyle = config.primary;
   ctx.lineWidth = 2;
   ctx.beginPath();
@@ -185,7 +182,6 @@ function drawWeightChart() {
 
   ctx.stroke();
 
-  // Draw points
   ctx.fillStyle = config.primary;
   data.forEach((d, i) => {
     const x = padding + (graphWidth / (data.length - 1 || 1)) * i;
@@ -195,7 +191,6 @@ function drawWeightChart() {
     ctx.fill();
   });
 
-  // Draw axes labels
   ctx.fillStyle = config.text || '#666';
   ctx.font = '12px sans-serif';
   ctx.textAlign = 'center';
@@ -212,7 +207,6 @@ function drawWeightChart() {
 function refreshWeightChart() {
   const canvas = document.getElementById('weight-chart');
   if (canvas && canvas.offsetParent !== null) {
-    // Chart is visible
     drawWeightChart();
   }
 }
@@ -220,7 +214,6 @@ function refreshWeightChart() {
 function refreshSleepChart() {
   const canvas = document.getElementById('sleep-chart');
   if (canvas && canvas.offsetParent !== null) {
-    // Chart is visible
     drawSleepChart();
   }
 }
@@ -239,7 +232,6 @@ function displayWeightList(data) {
   `).join('');
 }
 
-// Sleep functions
 function openSleepChart() {
   modal.open('sleep-modal');
   setTimeout(() => drawSleepChart(), 100);
@@ -291,11 +283,9 @@ function drawSleepChart() {
   const ctx = canvas.getContext('2d');
   const config = getChartConfig();
 
-  // Clear canvas
   canvas.width = canvas.offsetWidth;
   canvas.height = 250;
 
-  // Display average
   displaySleepAverage(data);
 
   if (data.length === 0) {
@@ -314,7 +304,6 @@ function drawSleepChart() {
   const maxSleep = 12;
   const minSleep = 0;
 
-  // Draw grid
   ctx.strokeStyle = config.gridLine;
   ctx.lineWidth = 1;
   for (let i = 0; i <= 4; i++) {
@@ -325,7 +314,6 @@ function drawSleepChart() {
     ctx.stroke();
   }
 
-  // Draw bars
   const barWidth = graphWidth / (data.length * 1.5);
   ctx.fillStyle = config.primary;
 
@@ -339,7 +327,6 @@ function drawSleepChart() {
     ctx.lineWidth = 1;
     ctx.strokeRect(x, y, barWidth, height);
 
-    // Draw time labels below bars
     ctx.fillStyle = config.text || '#666';
     ctx.font = '11px sans-serif';
     ctx.textAlign = 'center';
@@ -348,7 +335,6 @@ function drawSleepChart() {
     ctx.fillText(dateStr, x + barWidth / 2, canvas.height - 20);
   });
 
-  // Draw Y axis labels
   ctx.fillStyle = config.text || '#666';
   ctx.font = '12px sans-serif';
   ctx.textAlign = 'right';
@@ -387,7 +373,6 @@ function displaySleepList(data) {
   `).join('');
 }
 
-// Navigation
 document.addEventListener('DOMContentLoaded', function () {
   var navItems = document.querySelectorAll('.nav-item');
   var screens = document.querySelectorAll('.screen');
@@ -402,7 +387,6 @@ document.addEventListener('DOMContentLoaded', function () {
       screens.forEach(function (s) {
         if (s.id === target) {
           s.classList.add('active');
-          // Refresh graphs when switching to stats or profil
           if (target === 'screen-stats' || target === 'screen-profil') {
             setTimeout(() => {
               displayGoals();
@@ -423,7 +407,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Close modals on background click
   document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
@@ -434,17 +417,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Load goals on startup
   displayGoals();
   displayHomeScreen();
   initNutrition();
   
-  // Apply theme on startup
   const settings = getSettings();
-  applyTheme(settings.theme);
+  applyTheme(settings.theme, settings.secondaryColor);
 });
 
-// Settings functions
 function openSettings() {
   const settings = getSettings();
   document.getElementById('settings-firstname').value = settings.firstname || '';
@@ -452,6 +432,7 @@ function openSettings() {
   document.getElementById('settings-height').value = settings.height || '';
   document.getElementById('settings-birth-year').value = settings.birthYear || '';
   document.getElementById('settings-date-format').value = settings.dateFormat || 'fr';
+  document.getElementById('settings-secondary-color').value = settings.secondaryColor || '#00c9b1';
   
   document.querySelectorAll('input[name="theme"]').forEach(radio => {
     radio.checked = radio.value === (settings.theme || 'light');
@@ -479,11 +460,12 @@ function savePreferences() {
   const settings = getSettings();
   settings.theme = document.querySelector('input[name="theme"]:checked')?.value || 'light';
   settings.dateFormat = document.getElementById('settings-date-format').value;
+  settings.secondaryColor = document.getElementById('settings-secondary-color').value || '#00c9b1';
   save.settings(settings);
   alert('Préférences sauvegardées');
 }
 
-function applyTheme(theme) {
+function applyTheme(theme, secondaryColor) {
   const t = THEMES[theme] || THEMES.light;
   const root = document.documentElement;
   root.style.setProperty('--bg-color', t.bg);
@@ -492,11 +474,11 @@ function applyTheme(theme) {
   root.style.setProperty('--card-border', t.cardBorder);
   root.style.setProperty('--input-bg', t.inputBg);
   root.style.setProperty('--input-border', t.inputBorder);
+  root.style.setProperty('--primary-color', secondaryColor || '#00c9b1');
   document.body.style.background = t.bg;
   document.documentElement.style.background = t.bg;
 }
 
-// Goals functions
 function openGoalForm() {
   const goals = getGoals();
   document.getElementById('goal-weight-start').value = goals.weightStart || '';
@@ -548,13 +530,11 @@ function displayGoals() {
   const weightData = getWeightData();
   const currentWeight = weightData.length > 0 ? weightData[weightData.length - 1].value : goals.weightStart;
 
-  // Display objectives
   const arrow = goals.weightGoal === 'lose' ? '↓' : goals.weightGoal === 'gain' ? '↑' : '';
   document.getElementById('goal-weight-obj').textContent = goals.weight ? goals.weight + ' kg ' + arrow : 'N/A';
   document.getElementById('goal-fat-obj').textContent = goals.fat ? goals.fat + '%' : 'N/A';
   document.getElementById('goal-muscle-obj').textContent = goals.muscle ? goals.muscle + ' kg' : 'N/A';
 
-  // Display weight progression
   if (!goals.weightStart || !goals.weight) {
     document.getElementById('goal-weight-display').textContent = 'N/A';
     document.getElementById('goal-weight-bar').style.width = '0%';
@@ -571,7 +551,6 @@ function displayGoals() {
     document.getElementById('goal-weight-bar').style.width = progressPercent + '%';
   }
 
-  // Display fat/muscle (placeholder)
   ['fat', 'muscle'].forEach(type => {
     const display = document.getElementById(`goal-${type}-display`);
     const bar = document.getElementById(`goal-${type}-bar`);
@@ -585,23 +564,18 @@ function displayGoals() {
   });
 }
 
-// Display home screen stats
 function displayHomeScreen() {
   const weightData = getWeightData();
   const sleepData = getSleepData();
   const settings = getSettings();
   
-  // Display weight
   const currentWeight = weightData.length > 0 ? weightData[weightData.length - 1].value : null;
   document.getElementById('home-weight').textContent = currentWeight ? currentWeight.toFixed(1) + ' kg' : 'N/A';
   
-  // Calculate and display BMI with pointer
   if (currentWeight && settings.height) {
     const bmi = calculateBMI(currentWeight, settings.height);
     document.getElementById('home-bmi').textContent = bmi ? bmi : 'N/A';
     
-    // Position IMC pointer (0-100%)
-    // BMI ranges: <18.5 (0-20%), 18.5-25 (20-40%), 25-30 (40-60%), 30-35 (60-80%), >35 (80-100%)
     let pointerPercent = 0;
     if (bmi < 18.5) {
       pointerPercent = (bmi / 18.5) * 20;
@@ -620,7 +594,6 @@ function displayHomeScreen() {
     document.getElementById('imc-pointer').style.left = '0%';
   }
   
-  // Display sleep
   const lastSleep = sleepData.length > 0 ? sleepData[sleepData.length - 1].value : null;
   if (lastSleep) {
     document.getElementById('home-sleep').textContent = formatTime(lastSleep);
@@ -631,7 +604,6 @@ function displayHomeScreen() {
   }
 }
 
-// Nutrition functions - Open Food Facts API
 const getNutritionData = () => storage.get('nutritionData', {});
 const getTodayFoods = () => {
   const today = new Date().toISOString().split('T')[0];

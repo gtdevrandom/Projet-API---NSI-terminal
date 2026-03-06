@@ -299,6 +299,22 @@
               </label>
             </div>
           </div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>Couleur secondaire :</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+              <input type="color" id="settings-secondary-color" style="width:60px;height:40px;border:none;border-radius:8px;cursor:pointer;" />
+              <select style="flex:1;padding:10px 12px;font-size:14px;border:1px solid #d0d0d0;border-radius:8px;font-family:inherit;min-width:120px;">
+                <option selected disabled>Présets couleur</option>
+                <option value="#00c9b1" onclick="document.getElementById('settings-secondary-color').value='#00c9b1'">Teal</option>
+                <option value="#2196F3" onclick="document.getElementById('settings-secondary-color').value='#2196F3'">Bleu</option>
+                <option value="#9C27B0" onclick="document.getElementById('settings-secondary-color').value='#9C27B0'">Violet</option>
+                <option value="#4CAF50" onclick="document.getElementById('settings-secondary-color').value='#4CAF50'">Vert</option>
+                <option value="#FF9800" onclick="document.getElementById('settings-secondary-color').value='#FF9800'">Orange</option>
+                <option value="#f44336" onclick="document.getElementById('settings-secondary-color').value='#f44336'">Rouge</option>
+                <option value="#E91E63" onclick="document.getElementById('settings-secondary-color').value='#E91E63'">Rose</option>
+              </select>
+            </div>
+          </div>
           <div class="form-group">
             <label>Format des dates :</label>
             <select id="settings-date-format" name="date-format" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid #d0d0d0;border-radius:8px;font-family:inherit;">

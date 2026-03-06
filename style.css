@@ -7,6 +7,7 @@
   --card-border: #e0e0e0;
   --input-bg: #ffffff;
   --input-border: #d0d0d0;
+  --primary-color: #00c9b1;
 }
 
 html, body {
@@ -41,7 +42,7 @@ body {
 }
 
 .app-header {
-  background: linear-gradient(135deg, #00c9b1 0%, #00a893 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,8 +54,8 @@ body {
 }
 
 .app-header .logo-img {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 6px;
   object-fit: contain;
   position: absolute;
@@ -117,7 +118,7 @@ body {
 
 .data-row .value {
   font-weight: 700;
-  color: #00c9b1;
+  color: var(--primary-color);
 }
 
 .progress-container {
@@ -143,7 +144,7 @@ body {
 
 .progress-bar-fill {
   height: 100%;
-  background: #00c9b1;
+  background: var(--primary-color);
   border-radius: 4px;
 }
 
@@ -228,7 +229,7 @@ body {
 .score-big {
   font-size: 48px;
   font-weight: 700;
-  color: #00c9b1;
+  color: var(--primary-color);
   text-align: center;
   line-height: 1.1;
   padding: 16px 0;
@@ -246,7 +247,7 @@ body {
 }
 
 .btn-teal {
-  background: #00c9b1;
+  background: var(--primary-color);
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -257,16 +258,17 @@ body {
   width: 100%;
   text-align: center;
   letter-spacing: 0.3px;
-  transition: background 0.2s ease;
+  transition: filter 0.2s ease, transform 0.2s ease;
   flex-shrink: 0;
 }
 
 .btn-teal:hover {
-  background: #00b39e;
+  filter: brightness(0.85);
 }
 
 .btn-teal:active {
   transform: scale(0.98);
+  filter: brightness(0.75);
 }
 
 .session-item {
@@ -319,7 +321,7 @@ body {
   border-radius: 4px;
 }
 
-.heatmap-cell.active { background: #00c9b1; }
+.heatmap-cell.active { background: var(--primary-color); }
 .heatmap-cell.active-mid { background: #33c9b1; opacity: 0.75; }
 .heatmap-cell.inactive { background: #d0d0d0; }
 
