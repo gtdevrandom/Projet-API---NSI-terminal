@@ -1,4 +1,4 @@
-KaliFit — PWA Fitness & Nutrition Intelligence
+<img src="images/logo-512.png" alt="KaliFit logo" width="45"> KaliFit — PWA Fitness & Nutrition Intelligence 
 ==============================================
 
 KaliFit est une Progressive Web App (PWA) dediee a la nutrition, la performance sportive et l'optimisation intelligente.
