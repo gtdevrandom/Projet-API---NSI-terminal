@@ -479,6 +479,12 @@ function applyTheme(theme, secondaryColor) {
   document.documentElement.style.background = t.bg;
 }
 
+function applyColorPreview(color) {
+  const t = THEMES[getSettings().theme] || THEMES.light;
+  const root = document.documentElement;
+  root.style.setProperty('--primary-color', color);
+}
+
 function openGoalForm() {
   const goals = getGoals();
   document.getElementById('goal-weight-start').value = goals.weightStart || '';
