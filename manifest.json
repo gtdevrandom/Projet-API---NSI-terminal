@@ -20,8 +20,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "theme_color": "#00c9b1",
-  "background_color": "#f2f2f2",
+  "theme_color": "#d400ffff",
+  "background_color": "#B300D9",
   "shortcuts": [
     {
       "name": "Accueil",
