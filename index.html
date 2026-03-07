@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#D400FF" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="KaliFit" />
@@ -43,7 +42,7 @@
               <div class="imc-zone imc-obese-moderate"></div>
               <div class="imc-zone imc-obese-severe"></div>
             </div>
-            <div class="imc-pointer" id="imc-pointer" style="left: 0%"></div>
+            <div class="imc-pointer" id="imc-pointer"></div>
             <div class="imc-category-labels">
               <span>Maigreur</span>
               <span>Normal</span>
@@ -61,15 +60,15 @@
           <div class="card-title">Nutrition du jour</div>
           <div class="progress-container">
             <div class="progress-label">Protéines :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:55%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
           </div>
           <div class="progress-container">
             <div class="progress-label">Glucides :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:70%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
           </div>
           <div class="progress-container">
             <div class="progress-label">Lipides :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
           </div>
         </div>
 
@@ -94,22 +93,22 @@
           <div class="card-title">Nutrition du jour</div>
           <div class="progress-container">
             <div class="progress-label">Protéines :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="nutrition-protein-bar" style="width:0%"></div></div>
-            <span id="nutrition-protein-text" style="font-size:12px;margin-top:4px;">0g</span>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="nutrition-protein-bar"></div></div>
+              <span id="nutrition-protein-text" class="nutrition-text">0g</span>
           </div>
           <div class="progress-container">
             <div class="progress-label">Glucides :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="nutrition-carbs-bar" style="width:0%"></div></div>
-            <span id="nutrition-carbs-text" style="font-size:12px;margin-top:4px;">0g</span>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="nutrition-carbs-bar"></div></div>
+              <span id="nutrition-carbs-text" class="nutrition-text">0g</span>
           </div>
           <div class="progress-container">
             <div class="progress-label">Lipides :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="nutrition-fat-bar" style="width:0%"></div></div>
-            <span id="nutrition-fat-text" style="font-size:12px;margin-top:4px;">0g</span>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="nutrition-fat-bar"></div></div>
+              <span id="nutrition-fat-text" class="nutrition-text">0g</span>
           </div>
           <div class="progress-container">
             <div class="progress-label">Calories :</div>
-            <span id="nutrition-calories-text" style="font-size:12px;margin-top:4px;">0 kcal</span>
+            <span id="nutrition-calories-text" class="nutrition-text">0 kcal</span>
           </div>
         </div>
 
@@ -117,8 +116,8 @@
 
         <div class="card">
           <div class="card-title">Aliments du jour</div>
-          <div id="foods-list" style="display:flex;flex-direction:column;gap:7px;margin-top:4px">
-            <div style="text-align:center;opacity:0.6;">Aucun aliment ajouté</div>
+          <div id="foods-list" class="foods-list-container">
+            <div class="empty-state">Aucun aliment ajouté</div>
           </div>
         </div>
 
@@ -149,7 +148,7 @@
 
         <div class="card">
           <div class="card-title">Historique des séances</div>
-          <div style="display:flex;flex-direction:column;gap:7px;margin-top:4px">
+          <div class="session-history-container">
             <div class="session-item">N/A</div>
           </div>
         </div>
@@ -172,18 +171,18 @@
         <div class="card">
           <div class="card-title">Poids &amp; objectif</div>
           <div class="progress-container">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
-              <span class="progress-label" style="margin-bottom:0">Masse grasse :</span>
-              <span style="font-size:13px;font-weight:600">N/A</span>
+            <div class="goal-stat-row">
+              <span class="progress-label goal-stat-label">Masse grasse :</span>
+              <span class="goal-stat-value">N/A</span>
             </div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:0%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
           </div>
           <div class="progress-container">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
-              <span class="progress-label" style="margin-bottom:0">Masse musculaire :</span>
-              <span style="font-size:13px;font-weight:600">N/A</span>
+            <div class="goal-stat-row">
+              <span class="progress-label goal-stat-label">Masse musculaire :</span>
+              <span class="goal-stat-value">N/A</span>
             </div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:0%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
           </div>
         </div>
 
@@ -233,25 +232,25 @@
         <div class="card">
           <div class="card-title">Progression :</div>
           <div class="progress-container">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
-              <span class="progress-label" style="margin-bottom:0">Poids :</span>
-              <span style="font-size:13px;font-weight:600" id="goal-weight-display">N/A</span>
+            <div class="goal-stat-row">
+              <span class="progress-label goal-stat-label">Poids :</span>
+              <span class="goal-stat-value" id="goal-weight-display">N/A</span>
             </div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="goal-weight-bar" style="width:0%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="goal-weight-bar"></div></div>
           </div>
           <div class="progress-container">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
-              <span class="progress-label" style="margin-bottom:0">Masse grasse :</span>
-              <span style="font-size:13px;font-weight:600" id="goal-fat-display">N/A</span>
+            <div class="goal-stat-row">
+              <span class="progress-label goal-stat-label">Masse grasse :</span>
+              <span class="goal-stat-value" id="goal-fat-display">N/A</span>
             </div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="goal-fat-bar" style="width:0%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="goal-fat-bar"></div></div>
           </div>
           <div class="progress-container">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
-              <span class="progress-label" style="margin-bottom:0">Masse musculaire :</span>
-              <span style="font-size:13px;font-weight:600" id="goal-muscle-display">N/A</span>
+            <div class="goal-stat-row">
+              <span class="progress-label goal-stat-label">Masse musculaire :</span>
+              <span class="goal-stat-value" id="goal-muscle-display">N/A</span>
             </div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="goal-muscle-bar" style="width:0%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="goal-muscle-bar"></div></div>
           </div>
         </div>
 
@@ -265,19 +264,19 @@
 
         <div class="card">
           <div class="card-title">Informations personnelles</div>
-          <div class="form-group" style="margin-bottom:12px;">
+          <div class="form-group form-group-spacing">
             <label>Prénom :</label>
             <input type="text" id="settings-firstname" placeholder="Jean" />
           </div>
-          <div class="form-group" style="margin-bottom:12px;">
+          <div class="form-group form-group-spacing">
             <label>Nom :</label>
             <input type="text" id="settings-lastname" placeholder="Dupont" />
           </div>
-          <div class="form-group" style="margin-bottom:12px;">
+          <div class="form-group form-group-spacing">
             <label>Taille (cm) :</label>
             <input type="number" id="settings-height" placeholder="180" min="0" />
           </div>
-          <div class="form-group" style="margin-bottom:12px;">
+          <div class="form-group form-group-spacing">
             <label>Année de naissance :</label>
             <input type="number" id="settings-birth-year" placeholder="1990" min="1900" max="2099" />
           </div>
@@ -286,7 +285,7 @@
 
         <div class="card">
           <div class="card-title">Préférences</div>
-          <div class="form-group" style="margin-bottom:12px;">
+          <div class="form-group form-group-spacing">
             <label>Thème :</label>
             <div class="radio-group">
               <label class="radio-label">
@@ -299,23 +298,23 @@
               </label>
             </div>
           </div>
-          <div class="form-group" style="margin-bottom:12px;">
+          <div class="form-group form-group-spacing">
             <label>Couleur secondaire :</label>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
-              <div style="width:35px;height:40px;background:#00c9b1;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;" onclick="document.getElementById('settings-secondary-color').value='#00c9b1'; this.style.borderColor='#000'; applyColorPreview('#00c9b1')" title="Teal"></div>
-              <div style="width:35px;height:40px;background:#2196F3;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;" onclick="document.getElementById('settings-secondary-color').value='#2196F3'; this.style.borderColor='#000'; applyColorPreview('#2196F3')" title="Bleu"></div>
-              <div style="width:35px;height:40px;background:#9C27B0;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;" onclick="document.getElementById('settings-secondary-color').value='#9C27B0'; this.style.borderColor='#000'; applyColorPreview('#9C27B0')" title="Violet"></div>
-              <div style="width:35px;height:40px;background:#4CAF50;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;" onclick="document.getElementById('settings-secondary-color').value='#4CAF50'; this.style.borderColor='#000'; applyColorPreview('#4CAF50')" title="Vert"></div>
-              <div style="width:35px;height:40px;background:#FF9800;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;" onclick="document.getElementById('settings-secondary-color').value='#FF9800'; this.style.borderColor='#000'; applyColorPreview('#FF9800')" title="Orange"></div>
-              <div style="width:35px;height:40px;background:#f44336;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;" onclick="document.getElementById('settings-secondary-color').value='#f44336'; this.style.borderColor='#000'; applyColorPreview('#f44336')" title="Rouge"></div>
-              <div style="width:35px;height:40px;background:#E91E63;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;" onclick="document.getElementById('settings-secondary-color').value='#E91E63'; this.style.borderColor='#000'; applyColorPreview('#E91E63')" title="Rose"></div>
-              <div style="width:35px;height:40px;background:#d400ff;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;" onclick="document.getElementById('settings-secondary-color').value='#d400ff'; this.style.borderColor='#000'; applyColorPreview('#d400ff')" title="Magenta"></div>
+            <div class="color-picker-grid">
+              <div class="color-swatch color-teal" onclick="document.getElementById('settings-secondary-color').value='#00c9b1'; applyColorPreview('#00c9b1')" title="Teal"></div>
+              <div class="color-swatch color-blue" onclick="document.getElementById('settings-secondary-color').value='#2196F3'; applyColorPreview('#2196F3')" title="Bleu"></div>
+              <div class="color-swatch color-violet" onclick="document.getElementById('settings-secondary-color').value='#9C27B0'; applyColorPreview('#9C27B0')" title="Violet"></div>
+              <div class="color-swatch color-green" onclick="document.getElementById('settings-secondary-color').value='#4CAF50'; applyColorPreview('#4CAF50')" title="Vert"></div>
+              <div class="color-swatch color-orange" onclick="document.getElementById('settings-secondary-color').value='#FF9800'; applyColorPreview('#FF9800')" title="Orange"></div>
+              <div class="color-swatch color-red" onclick="document.getElementById('settings-secondary-color').value='#f44336'; applyColorPreview('#f44336')" title="Rouge"></div>
+              <div class="color-swatch color-pink" onclick="document.getElementById('settings-secondary-color').value='#E91E63'; applyColorPreview('#E91E63')" title="Rose"></div>
+              <div class="color-swatch color-magenta" onclick="document.getElementById('settings-secondary-color').value='#d400ff'; applyColorPreview('#d400ff')" title="Magenta"></div>
             </div>
             <input type="hidden" id="settings-secondary-color" value="#d400ff" />
           </div>
           <div class="form-group">
             <label>Format des dates :</label>
-            <select id="settings-date-format" name="date-format" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid #d0d0d0;border-radius:8px;font-family:inherit;">
+            <select id="settings-date-format" name="date-format" title="Format des dates" class="date-format-select">
               <option value="fr">JJ/MM/YYYY (ex: 28/02/2026)</option>
               <option value="us">MM/DD/YYYY (ex: 02/28/2026)</option>
               <option value="iso">YYYY-MM-DD (ex: 2026-02-28)</option>
@@ -409,9 +408,9 @@
             <button class="modal-close" onclick="closeWeightChart()">✕</button>
           </div>
           <div class="modal-body">
-            <button class="btn-teal" onclick="openWeightForm()" style="margin-bottom:12px;">+ Ajouter un poids</button>
+            <button class="btn-teal modal-button-spacing" onclick="openWeightForm()">+ Ajouter un poids</button>
             <canvas id="weight-chart"></canvas>
-            <div id="weight-list" style="margin-top:12px;"></div>
+            <div id="weight-list" class="modal-button-spacing"></div>
           </div>
         </div>
       </div>
@@ -423,10 +422,10 @@
             <button class="modal-close" onclick="closeSleepChart()">✕</button>
           </div>
           <div class="modal-body">
-            <button class="btn-teal" onclick="openSleepForm()" style="margin-bottom:12px;">+ Ajouter un sommeil</button>
+            <button class="btn-teal modal-button-spacing" onclick="openSleepForm()">+ Ajouter un sommeil</button>
             <div id="sleep-average" class="average-box"></div>
             <canvas id="sleep-chart"></canvas>
-            <div id="sleep-list" style="margin-top:12px;"></div>
+            <div id="sleep-list" class="modal-button-spacing"></div>
           </div>
         </div>
       </div>
@@ -440,7 +439,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label>Date :</label>
-              <input type="date" id="weight-date" name="weight-date" />
+              <input type="date" id="weight-date" name="weight-date" title="Date du poids" />
             </div>
             <div class="form-group">
               <label>Poids (kg) :</label>
@@ -460,18 +459,18 @@
           <div class="modal-body">
             <div class="form-group">
               <label>Date :</label>
-              <input type="date" id="sleep-date" name="sleep-date" />
+              <input type="date" id="sleep-date" name="sleep-date" title="Date du sommeil" />
             </div>
             <div class="form-group">
               <label>Durée :</label>
-              <div style="display:flex;gap:8px;align-items:center;">
-                <div style="flex:1;">
-                  <input type="number" id="sleep-hours" name="sleep-hours" placeholder="7" min="0" max="23" style="width:100%;" />
-                  <small style="font-size:11px;opacity:0.7;">heures</small>
+              <div class="sleep-duration-container">
+                <div class="sleep-input-group">
+                  <input type="number" id="sleep-hours" name="sleep-hours" placeholder="7" min="0" max="23" />
+                  <small class="sleep-input-label">heures</small>
                 </div>
-                <div style="flex:1;">
-                  <input type="number" id="sleep-minutes" name="sleep-minutes" placeholder="30" min="0" max="59" style="width:100%;" />
-                  <small style="font-size:11px;opacity:0.7;">minutes</small>
+                <div class="sleep-input-group">
+                  <input type="number" id="sleep-minutes" name="sleep-minutes" placeholder="30" min="0" max="59" />
+                  <small class="sleep-input-label">minutes</small>
                 </div>
               </div>
             </div>
@@ -491,8 +490,8 @@
               <label>Rechercher un aliment :</label>
               <input type="text" id="food-search-input" placeholder="Ex: pomme, poulet, riz..." />
             </div>
-            <button class="btn-teal" onclick="searchFoods()" style="margin-bottom:12px;">Rechercher</button>
-            <div id="food-search-results" style="display:flex;flex-direction:column;gap:8px;"></div>
+            <button class="btn-teal modal-button-spacing" onclick="searchFoods()">Rechercher</button>
+            <div id="food-search-results" class="search-results-container"></div>
           </div>
         </div>
       </div>
@@ -504,7 +503,7 @@
             <button class="modal-close" onclick="closeFoodDetailsModal()">✕</button>
           </div>
           <div class="modal-body">
-            <div id="food-details-content" style="display:flex;flex-direction:column;gap:8px;"></div>
+            <div id="food-details-content" class="food-details-container"></div>
             <div class="form-group">
               <label>Quantité (g) :</label>
               <input type="number" id="food-quantity-input" placeholder="100" min="1" step="1" />

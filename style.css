@@ -146,6 +146,7 @@ body {
   height: 100%;
   background: var(--primary-color);
   border-radius: 4px;
+  width: 0%;
 }
 
 .imc-bar-container {
@@ -195,6 +196,7 @@ body {
   background: var(--text-color);
   border-radius: 2px;
   top: -2px;
+  left: 0%;
   transform: translateX(-50%);
   transition: left 0.3s ease;
 }
@@ -588,6 +590,134 @@ body {
   background: var(--input-bg);
   color: var(--text-color);
   border: 1px solid var(--input-border);
+}
+
+/* Utility classes for inline styles */
+.nutrition-text {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.empty-state {
+  text-align: center;
+  opacity: 0.6;
+}
+
+.foods-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.session-history-container {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.goal-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.goal-stat-value {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.goal-stat-label {
+  margin-bottom: 0;
+}
+
+.form-group-spacing {
+  margin-bottom: 12px;
+}
+
+.color-picker-grid {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.color-swatch {
+  width: 35px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.color-swatch.color-teal {
+  background: #00c9b1;
+}
+
+.color-swatch.color-blue {
+  background: #2196F3;
+}
+
+.color-swatch.color-violet {
+  background: #9C27B0;
+}
+
+.color-swatch.color-green {
+  background: #4CAF50;
+}
+
+.color-swatch.color-orange {
+  background: #FF9800;
+}
+
+.color-swatch.color-red {
+  background: #f44336;
+}
+
+.color-swatch.color-pink {
+  background: #E91E63;
+}
+
+.color-swatch.color-magenta {
+  background: #d400ff;
+}
+
+.sleep-duration-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sleep-input-group {
+  flex: 1;
+}
+
+.sleep-input-group input {
+  width: 100%;
+}
+
+.sleep-input-label {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.food-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-button-spacing {
+  margin-bottom: 12px;
+}
+
+.search-results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 @media (max-width: 768px) {
