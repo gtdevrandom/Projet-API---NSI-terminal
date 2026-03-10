@@ -15,7 +15,6 @@
   </head>
   <body>
     <div class="app">
-
       <header class="app-header">
         <img src="./images/logo-192.png" alt="KaliFit" class="logo-img">
         <h1>KaliFit</h1>
@@ -139,17 +138,17 @@
 
       <section id="screen-sport" class="screen">
 
-        <button class="btn-teal">+ Ajouter une séance</button>
+        <button class="btn-teal" onclick="openSessionForm()">+ Ajouter une séance</button>
 
         <div class="card">
           <div class="score-label">Qualité de la séance</div>
-          <div class="score-big">N/A</div>
+          <div class="score-big" id="sport-session-quality">N/A</div>
         </div>
 
         <div class="card">
           <div class="card-title">Historique des séances</div>
-          <div class="session-history-container">
-            <div class="session-item">N/A</div>
+          <div class="session-history-container" id="session-history-container">
+            <div class="session-item">Aucune séance ajoutée</div>
           </div>
         </div>
 
@@ -509,6 +508,64 @@
               <input type="number" id="food-quantity-input" placeholder="100" min="1" step="1" />
             </div>
             <button class="btn-teal" onclick="addFoodToDay()">Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="session-form-modal" class="modal">
+        <div class="modal-content modal-form">
+          <div class="modal-header">
+            <h2>Ajouter une séance</h2>
+            <button class="modal-close" onclick="closeSessionForm()">✕</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Date :</label>
+              <input type="date" id="session-date" name="session-date" title="Date de la séance" />
+            </div>
+            <div class="form-group">
+              <label>Type de sport :</label>
+              <select id="session-type" name="session-type" title="Type de sport">
+                <option value="">-- Sélectionner un sport --</option>
+                <option value="cardio">Cardio (course, vélo, natation, etc.)</option>
+                <option value="musculation">Musculation</option>
+                <option value="yoga">Yoga / Stretching</option>
+                <option value="football">Football / Basket</option>
+                <option value="tennis">Tennis / Badminton</option>
+                <option value="crossfit">CrossFit / HIIT</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Durée (minutes) :</label>
+              <input type="number" id="session-duration" name="session-duration" placeholder="60" min="1" step="1" />
+            </div>
+            <div class="form-group">
+              <label>Intensité :</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="session-intensity" value="faible" />
+                  <span>Faible (repos actif)</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="session-intensity" value="modere" checked />
+                  <span>Modérée (75% effort max)</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="session-intensity" value="elevee" />
+                  <span>Élevée (90-100% effort)</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Calories brûlées (kcal) :</label>
+              <input type="number" id="session-calories" name="session-calories" placeholder="300" min="0" step="1" />
+            </div>
+            <div class="form-group">
+              <label>Notes :</label>
+              <textarea id="session-notes" name="session-notes" placeholder="Ajouter des notes (sensation, fond, difficultés...)" rows="3"></textarea>
+            </div>
+            <button class="btn-teal" onclick="saveSession()">Enregistrer la séance</button>
           </div>
         </div>
       </div>

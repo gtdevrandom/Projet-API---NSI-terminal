@@ -71,6 +71,7 @@ const save = {
   weight: data => { storage.set('weightData', data); refreshWeightChart(); displayGoals(); displayHomeScreen(); },
   sleep: data => { storage.set('sleepData', data); refreshSleepChart(); displayHomeScreen(); },
   goals: data => { storage.set('goals', data); displayGoals(); },
+  sessions: data => { storage.set('sessionsData', data); displaySessionHistory(); updateSessionQuality(); },
   settings: data => { storage.set('settings', data); applyTheme(data.theme, data.secondaryColor); refreshAllGraphs(); displayHomeScreen(); }
 };
 
@@ -849,4 +850,162 @@ function updateNutritionDisplay() {
 function initNutrition() {
   displayFoodsList();
   updateNutritionDisplay();
+}
+
+// ===== GESTION DES SÉANCES DE SPORT =====
+
+const getSessionsData = () => storage.get('sessionsData', []);
+
+function openSessionForm() {
+  document.getElementById('session-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('session-type').value = '';
+  document.getElementById('session-duration').value = '';
+  document.getElementById('session-calories').value = '';
+  document.getElementById('session-notes').value = '';
+  document.querySelector('input[name="session-intensity"][value="modere"]').checked = true;
+  modal.open('session-form-modal');
+}
+
+function closeSessionForm() {
+  modal.close('session-form-modal');
+  displaySessionHistory();
+  updateSessionQuality();
+}
+
+function saveSession() {
+  const date = document.getElementById('session-date').value;
+  const type = document.getElementById('session-type').value;
+  const duration = parseInt(document.getElementById('session-duration').value);
+  const intensity = document.querySelector('input[name="session-intensity"]:checked')?.value;
+  const calories = parseInt(document.getElementById('session-calories').value) || 0;
+  const notes = document.getElementById('session-notes').value;
+
+  if (!date || !type || isNaN(duration) || duration <= 0 || !intensity) {
+    alert('Veuillez remplir tous les champs obligatoires');
+    return;
+  }
+
+  let data = getSessionsData();
+  const session = {
+    id: Date.now(),
+    date: date,
+    type: type,
+    duration: duration,
+    intensity: intensity,
+    calories: calories,
+    notes: notes,
+    timestamp: new Date().toISOString()
+  };
+
+  data.push(session);
+  data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+  save.sessions(data);
+  closeSessionForm();
+}
+
+function displaySessionHistory() {
+  const sessions = getSessionsData();
+  const container = document.getElementById('session-history-container');
+
+  if (sessions.length === 0) {
+    container.innerHTML = '<div style="text-align:center;opacity:0.6;padding:20px;">Aucune séance ajoutée</div>';
+    return;
+  }
+
+  const sportEmoji = {
+    cardio: '🏃',
+    musculation: '💪',
+    yoga: '🧘',
+    football: '⚽',
+    tennis: '🎾',
+    crossfit: '🔥',
+    autre: '🏋️'
+  };
+
+  const intensityLabel = {
+    faible: 'Faible',
+    modere: 'Modérée',
+    elevee: 'Élevée'
+  };
+
+  container.innerHTML = sessions.slice(0, 20).map(session => `
+    <div style="padding:12px;border:1px solid #ddd;border-radius:6px;margin-bottom:8px;background:#f9f9f9;">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:600;">
+          <span style="font-size:20px;">${sportEmoji[session.type] || '🏋️'}</span>
+          <span>${session.type.charAt(0).toUpperCase() + session.type.slice(1)}</span>
+        </div>
+        <button style="background:#ff6b6b;color:white;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;font-size:12px;" onclick="deleteSession('${session.id}')">Supprimer</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px;">
+        <div><span style="opacity:0.7;">Date:</span> ${new Date(session.date).toLocaleDateString('fr-FR')}</div>
+        <div><span style="opacity:0.7;">Durée:</span> ${session.duration} min</div>
+        <div><span style="opacity:0.7;">Intensité:</span> ${intensityLabel[session.intensity]}</div>
+        <div><span style="opacity:0.7;">Calories:</span> ${session.calories} kcal</div>
+      </div>
+      ${session.notes ? `<div style="margin-top:8px;padding:8px;background:#fff;border-left:3px solid #d400ff;font-size:12px;">${session.notes}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function deleteSession(sessionId) {
+  if (confirm('Êtes-vous sûr de vouloir supprimer cette séance ?')) {
+    let data = getSessionsData();
+    data = data.filter(s => s.id != sessionId);
+    storage.set('sessionsData', data);
+    displaySessionHistory();
+    updateSessionQuality();
+  }
+}
+
+function updateSessionQuality() {
+  const sessions = getSessionsData();
+  const container = document.getElementById('sport-session-quality');
+
+  if (sessions.length === 0) {
+    container.textContent = 'N/A';
+    return;
+  }
+
+  const quality = calculateSessionQuality();
+  container.textContent = quality + '/10';
+}
+
+function calculateSessionQuality() {
+  const sessions = getSessionsData();
+  if (sessions.length === 0) return 'N/A';
+
+  // Prendre les 7 derniers jours
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const recentSessions = sessions.filter(s => new Date(s.date) >= sevenDaysAgo);
+
+  if (recentSessions.length === 0) return 'N/A';
+
+  let score = 0;
+
+  // Critère 1: Régularité (max 3 points)
+  const daysWithSessions = new Set(recentSessions.map(s => s.date)).size;
+  if (daysWithSessions >= 5) score += 3;
+  else if (daysWithSessions >= 3) score += 2;
+  else if (daysWithSessions >= 1) score += 1;
+
+  // Critère 2: Variété (max 2 points)
+  const types = new Set(recentSessions.map(s => s.type)).size;
+  if (types >= 3) score += 2;
+  else if (types >= 2) score += 1;
+
+  // Critère 3: Intensité (max 2 points)
+  const highIntensityCount = recentSessions.filter(s => s.intensity === 'elevee').length;
+  if (highIntensityCount >= 2) score += 2;
+  else if (highIntensityCount >= 1) score += 1;
+
+  // Critère 4: Durée moyenne (max 3 points)
+  const avgDuration = recentSessions.reduce((sum, s) => sum + s.duration, 0) / recentSessions.length;
+  if (avgDuration >= 45) score += 3;
+  else if (avgDuration >= 30) score += 2;
+  else if (avgDuration >= 15) score += 1;
+
+  return Math.min(score, 10);
 }
