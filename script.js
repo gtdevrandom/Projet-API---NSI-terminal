@@ -1033,33 +1033,30 @@ async function callGeminiAPI(prompt) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
     
     try {
+        const payload = {
+            contents: [{
+                parts: [{
+                    text: prompt
+                }]
+            }]
+        };
+
         const response = await fetch(url, {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{
-                        text: prompt
-                    }]
-                }],
-                generationConfig: {
-                    temperature: 0.7,
-                    topK: 40,
-                    topP: 0.95,
-                    maxOutputTokens: 1024
-                }
-            })
+            body: JSON.stringify(payload)
         });
 
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            console.error("API Response:", response.status, errorData);
-            throw new Error(`API Error: ${response.status}`);
-        }
-
+        console.log("Gemini Response Status:", response.status);
         const data = await response.json();
+        console.log("Gemini Response Data:", data);
+        
+        if (!response.ok) {
+            console.error("API Error Details:", data);
+            throw new Error(`API Error: ${response.status} - ${data.error?.message || 'Unknown error'}`);
+        }
         
         if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
             throw new Error("Invalid API response structure");
@@ -1068,7 +1065,7 @@ async function callGeminiAPI(prompt) {
         return data.candidates[0].content.parts[0].text;
     } catch (error) {
         console.error("Erreur Gemini:", error);
-        console.warn("Impossible de contacter Gemini. Vérifiez votre clé API.");
+        console.warn("Impossible de contacter Gemini. Utilisation des suggestions locales.");
         return null;
     }
 }
