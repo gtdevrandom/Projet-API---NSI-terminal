@@ -1044,9 +1044,12 @@ async function callGeminiAPI(prompt) {
         const response = await fetch(url, {
             method: "POST",
             headers: { 
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+            mode: 'cors',
+            credentials: 'omit'
         });
 
         console.log("Gemini Response Status:", response.status);
