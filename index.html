@@ -11,6 +11,7 @@
     <link rel="manifest" href="./manifest.json" />
     <title>KaliFit</title>
     <link rel="stylesheet" href="./style.css" />
+    <script src="./ai-config.js"></script>
     <script defer src="./script.js"></script>
   </head>
   <body>
@@ -59,15 +60,22 @@
           <div class="card-title">Nutrition du jour</div>
           <div class="progress-container">
             <div class="progress-label">Protéines :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="home-nutrition-protein-bar"></div></div>
+            <span id="home-nutrition-protein-text" class="nutrition-text">0g</span>
           </div>
           <div class="progress-container">
             <div class="progress-label">Glucides :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="home-nutrition-carbs-bar"></div></div>
+            <span id="home-nutrition-carbs-text" class="nutrition-text">0g</span>
           </div>
           <div class="progress-container">
             <div class="progress-label">Lipides :</div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="home-nutrition-fat-bar"></div></div>
+            <span id="home-nutrition-fat-text" class="nutrition-text">0g</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-label">Calories :</div>
+            <span id="home-nutrition-calories-text" class="nutrition-text">0 kcal</span>
           </div>
         </div>
 

@@ -308,6 +308,26 @@ body {
   display: flex;
   align-items: center;
   opacity: 0.9;
+  transition: all 0.3s ease-in-out;
+}
+
+.ia-text.ia-updated {
+  animation: pulse-update 0.6s ease-in-out;
+}
+
+@keyframes pulse-update {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
 }
 
 .heatmap-grid {
@@ -321,11 +341,28 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
-.heatmap-cell.active { background: var(--primary-color); }
-.heatmap-cell.active-mid { background: #D400FF; opacity: 0.75; }
-.heatmap-cell.inactive { background: #d0d0d0; }
+.heatmap-cell.active { 
+  background: var(--primary-color);
+  opacity: 1;
+}
+
+.heatmap-cell.active-low { 
+  background: var(--primary-color);
+  opacity: 0.4;
+}
+
+.heatmap-cell.active-mid { 
+  background: var(--primary-color);
+  opacity: 0.7;
+}
+
+.heatmap-cell.inactive { 
+  background: var(--card-border);
+  opacity: 0.5;
+}
 
 .bottom-nav {
   position: absolute;
@@ -601,6 +638,7 @@ body {
 .empty-state {
   text-align: center;
   opacity: 0.6;
+  color: var(--text-color);
 }
 
 .foods-list-container {
@@ -608,6 +646,21 @@ body {
   flex-direction: column;
   gap: 7px;
   margin-top: 4px;
+}
+
+.food-search-item {
+  padding: 10px;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+.food-search-item:hover {
+  background: var(--input-bg);
+  opacity: 0.8;
 }
 
 .session-history-container {

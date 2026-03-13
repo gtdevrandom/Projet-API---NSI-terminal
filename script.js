@@ -130,6 +130,10 @@ function saveWeight() {
   
   save.weight(data);
   closeWeightForm();
+  // Mettre à jour les suggestions IA
+  if (window.refreshAISuggestions) {
+    setTimeout(() => window.refreshAISuggestions(), 500);
+  }
 }
 
 function drawWeightChart() {
@@ -274,6 +278,10 @@ function saveSleep() {
   
   save.sleep(data);
   closeSleepForm();
+  // Mettre à jour les suggestions IA
+  if (window.refreshAISuggestions) {
+    setTimeout(() => window.refreshAISuggestions(), 500);
+  }
 }
 
 function drawSleepChart() {
@@ -391,10 +399,14 @@ document.addEventListener('DOMContentLoaded', function () {
           if (target === 'screen-stats' || target === 'screen-profil') {
             setTimeout(() => {
               displayGoals();
+              updateStatsScreen(); // Mettre à jour la heatmap et l'encouragement
               refreshAllGraphs();
             }, 100);
           } else if (target === 'screen-accueil') {
-            setTimeout(() => displayHomeScreen(), 100);
+            setTimeout(() => {
+              displayHomeScreen();
+              updateHomeNutrition();
+            }, 100);
           } else if (target === 'screen-nutrition') {
             setTimeout(() => {
               displayFoodsList();
@@ -420,6 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   displayGoals();
   displayHomeScreen();
+  updateStatsScreen(); // Initialiser la heatmap et l'encouragement
   initNutrition();
   
   const settings = getSettings();
@@ -478,6 +491,10 @@ function applyTheme(theme, secondaryColor) {
   root.style.setProperty('--primary-color', secondaryColor || '#00c9b1');
   document.body.style.background = t.bg;
   document.documentElement.style.background = t.bg;
+  // Rafraîchir les éléments qui dépendent du thème
+  updateStatsScreen();
+  displaySessionHistory();
+  displayFoodsList();
 }
 
 function applyColorPreview(color) {
@@ -530,6 +547,87 @@ function saveGoals() {
 
   save.goals(goals);
   closeGoalForm();
+}
+
+// Génère la heatmap des séances (derniers 30 jours)
+function generateSessionsHeatmap() {
+  const sessions = getSessionsData();
+  const heatmapGrid = document.querySelector('.heatmap-grid');
+  
+  if (!heatmapGrid) return;
+
+  // Créer un calendrier des 30 derniers jours
+  const today = new Date();
+  const days = [];
+  
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    const dateStr = date.toISOString().split('T')[0];
+    
+    // Compter les séances pour ce jour
+    const sessionCount = sessions.filter(s => s.date === dateStr).length;
+    days.push({ date: dateStr, count: sessionCount });
+  }
+
+  // Générer les cellules
+  heatmapGrid.innerHTML = days.map(day => {
+    let className = 'heatmap-cell';
+    if (day.count === 0) className += ' inactive';
+    else if (day.count === 1) className += ' active-low';
+    else if (day.count === 2) className += ' active-mid';
+    else className += ' active';
+    
+    return `<div class="${className}" title="${day.date}: ${day.count} séance${day.count > 1 ? 's' : ''}"></div>`;
+  }).join('');
+}
+
+// Génère un encouragement pour les stats basé sur la progression
+function generateProgressEncouragement() {
+  const weightData = getWeightData();
+  const goals = getGoals();
+  const sessions = getSessionsData();
+  
+  let encouragement = "Commencez à enregistrer vos données !";
+  
+  if (weightData.length > 0) {
+    const currentWeight = weightData[weightData.length - 1].value;
+    const firstWeight = weightData[0].value;
+    const weightChange = firstWeight - currentWeight;
+    
+    if (goals.weightGoal === 'lose' && weightChange > 0) {
+      encouragement = `🎉 ${weightChange.toFixed(1)}kg de moins ! Continue comme ça !`;
+    } else if (goals.weightGoal === 'gain' && weightChange < 0) {
+      encouragement = `💪 ${Math.abs(weightChange).toFixed(1)}kg de plus ! Tu es sur la bonne voie !`;
+    } else if (weightData.length >= 7) {
+      encouragement = "📈 Vous suivez vos progrès régulièrement. Excellent !";
+    }
+  }
+  
+  if (sessions.length > 0) {
+    const thisWeek = sessions.filter(s => {
+      const sessionDate = new Date(s.date);
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      return sessionDate >= oneWeekAgo;
+    }).length;
+    
+    if (thisWeek >= 3) {
+      encouragement = `🏆 ${thisWeek} séances cette semaine ! Vous êtes un champion !`;
+    }
+  }
+  
+  return encouragement;
+}
+
+// Met à jour l'affichage des stats avec heatmap et encouragement
+function updateStatsScreen() {
+  generateSessionsHeatmap();
+  
+  const encouragementText = document.querySelector('#screen-stats .ia-text');
+  if (encouragementText) {
+    encouragementText.textContent = generateProgressEncouragement();
+  }
 }
 
 function displayGoals() {
@@ -609,6 +707,44 @@ function displayHomeScreen() {
     document.getElementById('home-sleep').textContent = 'N/A';
     document.getElementById('home-sleep-text').textContent = 'N/A';
   }
+  
+  // Mettre à jour la nutrition du jour sur l'accueil
+  updateHomeNutrition();
+}
+
+// Met à jour l'affichage de la nutrition du jour sur l'accueil
+function updateHomeNutrition() {
+  const foods = getTodayFoods();
+  
+  let totalProteins = 0, totalCarbs = 0, totalFats = 0, totalCalories = 0;
+  
+  foods.forEach(food => {
+    totalProteins += food.proteins || 0;
+    totalCarbs += food.carbs || 0;
+    totalFats += food.fats || 0;
+    totalCalories += food.calories || 0;
+  });
+
+  // Objectifs par défaut (peut être personnalisé)
+  const targetProteins = 150;
+  const targetCarbs = 250;
+  const targetFats = 70;
+  const targetCalories = 2000;
+
+  // Mettre à jour les textes
+  document.getElementById('home-nutrition-protein-text').textContent = totalProteins.toFixed(1) + 'g';
+  document.getElementById('home-nutrition-carbs-text').textContent = totalCarbs.toFixed(1) + 'g';
+  document.getElementById('home-nutrition-fat-text').textContent = totalFats.toFixed(1) + 'g';
+  document.getElementById('home-nutrition-calories-text').textContent = totalCalories.toFixed(0) + ' kcal';
+
+  // Mettre à jour les barres de progression
+  const proteinPercent = Math.min((totalProteins / targetProteins) * 100, 100);
+  const carbsPercent = Math.min((totalCarbs / targetCarbs) * 100, 100);
+  const fatPercent = Math.min((totalFats / targetFats) * 100, 100);
+
+  document.getElementById('home-nutrition-protein-bar').style.width = proteinPercent + '%';
+  document.getElementById('home-nutrition-carbs-bar').style.width = carbsPercent + '%';
+  document.getElementById('home-nutrition-fat-bar').style.width = fatPercent + '%';
 }
 
 const getNutritionData = () => storage.get('nutritionData', {});
@@ -645,30 +781,44 @@ async function searchFoods() {
   }
 
   const resultsDiv = document.getElementById('food-search-results');
-  resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;opacity:0.7;">Recherche en cours...</div>';
+  resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;opacity:0.7;color:var(--text-color);">Recherche en cours...</div>';
 
   try {
     const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1`);
     const data = await response.json();
 
     if (!data.products || data.products.length === 0) {
-      resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;opacity:0.6;">Aucun aliment trouvé</div>';
+      resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;opacity:0.6;color:var(--text-color);">Aucun aliment trouvé</div>';
       return;
     }
 
     foodSearchResults = data.products.filter(p => p.nutriments && (p.nutriments.energy_kcal || p.nutriments.energy_100g));
     
     if (foodSearchResults.length === 0) {
-      resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;opacity:0.6;">Aucun aliment avec données nutritionnelles</div>';
+      resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;opacity:0.6;color:var(--text-color);">Aucun aliment avec données nutritionnelles</div>';
       return;
     }
 
     resultsDiv.innerHTML = foodSearchResults.slice(0, 10).map((product, idx) => `
-      <div style="padding:10px;border:1px solid #ddd;border-radius:6px;cursor:pointer;transition:background 0.2s;" onclick="selectFoodByIndex(${idx})" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='white'">
+      <div class="food-search-item" data-index="${idx}">
         <div style="font-weight:600;margin-bottom:4px;">${product.product_name || 'Produit sans nom'}</div>
         <div style="font-size:12px;opacity:0.7;">Marque: ${product.brands || 'Non spécifiée'}</div>
       </div>
     `).join('');
+    
+    // Ajouter les event listeners pour tous les items
+    document.querySelectorAll('.food-search-item').forEach(item => {
+      const idx = parseInt(item.getAttribute('data-index'));
+      item.addEventListener('click', () => selectFoodByIndex(idx));
+      item.addEventListener('mouseover', function() {
+        this.style.background = 'var(--input-bg)';
+        this.style.opacity = '0.8';
+      });
+      item.addEventListener('mouseout', function() {
+        this.style.background = 'var(--card-bg)';
+        this.style.opacity = '1';
+      });
+    });
   } catch (error) {
     console.error('Erreur API Open Food Facts:', error);
     resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#ff6b6b;">Erreur lors de la recherche. Vérifiez votre connexion.</div>';
@@ -692,10 +842,10 @@ function selectFood(product) {
 
   const detailsContent = document.getElementById('food-details-content');
   detailsContent.innerHTML = `
-    <div style="padding:8px;background:#f0f0f0;border-radius:6px;">
+    <div style="padding:8px;background:var(--card-bg);border-radius:6px;color:var(--text-color);">
       <div style="font-weight:600;margin-bottom:8px;">${product.product_name || 'Produit'}</div>
       <div style="font-size:13px;margin-bottom:8px;">Marque: ${product.brands || 'Non spécifiée'}</div>
-      <div style="border-top:1px solid #ddd;padding-top:8px;">
+      <div style="border-top:1px solid var(--card-border);padding-top:8px;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
           <div><span style="opacity:0.7;">Calories (100g):</span> <strong>${calories.toFixed(1)} kcal</strong></div>
           <div><span style="opacity:0.7;">Protéines (100g):</span> <strong>${proteins.toFixed(1)}g</strong></div>
@@ -751,6 +901,11 @@ function addFoodToDay() {
   closeFoodDetailsModal();
   displayFoodsList();
   updateNutritionDisplay();
+  updateHomeNutrition(); // Mettre à jour la nutrition de l'accueil
+  // Mettre à jour les suggestions IA
+  if (window.refreshAISuggestions) {
+    setTimeout(() => window.refreshAISuggestions(), 500);
+  }
 }
 
 function displayFoodsList() {
@@ -758,12 +913,12 @@ function displayFoodsList() {
   const foodsList = document.getElementById('foods-list');
   
   if (foods.length === 0) {
-    foodsList.innerHTML = '<div style="text-align:center;opacity:0.6;">Aucun aliment ajouté</div>';
+    foodsList.innerHTML = '<div style="text-align:center;opacity:0.6;color:var(--text-color);">Aucun aliment ajouté</div>';
     return;
   }
 
   foodsList.innerHTML = foods.map((food, idx) => `
-    <div style="padding:8px;border:1px solid #ddd;border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="padding:8px;border:1px solid var(--card-border);border-radius:6px;display:flex;justify-content:space-between;align-items:center;background:var(--card-bg);color:var(--text-color);">
       <div>
         <div style="font-weight:600;">${food.name}</div>
         <div style="font-size:12px;opacity:0.7;">${food.quantity}g | ${food.calories.toFixed(0)} kcal</div>
@@ -845,11 +1000,15 @@ function updateNutritionDisplay() {
   document.getElementById('nutrition-protein-bar').style.width = Math.min((totals.proteins / needs.proteins) * 100, 100) + '%';
   document.getElementById('nutrition-carbs-bar').style.width = Math.min((totals.carbs / needs.carbs) * 100, 100) + '%';
   document.getElementById('nutrition-fat-bar').style.width = Math.min((totals.fats / needs.fats) * 100, 100) + '%';
+  
+  // Aussi mettre à jour l'affichage de la nutrition sur l'accueil
+  updateHomeNutrition();
 }
 
 function initNutrition() {
   displayFoodsList();
   updateNutritionDisplay();
+  updateHomeNutrition();
 }
 
 // ===== GESTION DES SÉANCES DE SPORT =====
@@ -870,6 +1029,8 @@ function closeSessionForm() {
   modal.close('session-form-modal');
   displaySessionHistory();
   updateSessionQuality();
+  // Mettre à jour la heatmap et l'encouragement
+  updateStatsScreen();
 }
 
 function saveSession() {
@@ -902,6 +1063,10 @@ function saveSession() {
   
   save.sessions(data);
   closeSessionForm();
+  // Mettre à jour les suggestions IA
+  if (window.refreshAISuggestions) {
+    setTimeout(() => window.refreshAISuggestions(), 500);
+  }
 }
 
 function displaySessionHistory() {
@@ -909,7 +1074,7 @@ function displaySessionHistory() {
   const container = document.getElementById('session-history-container');
 
   if (sessions.length === 0) {
-    container.innerHTML = '<div style="text-align:center;opacity:0.6;padding:20px;">Aucune séance ajoutée</div>';
+    container.innerHTML = '<div style="text-align:center;opacity:0.6;padding:20px;color:var(--text-color);">Aucune séance ajoutée</div>';
     return;
   }
 
@@ -930,7 +1095,7 @@ function displaySessionHistory() {
   };
 
   container.innerHTML = sessions.slice(0, 20).map(session => `
-    <div style="padding:12px;border:1px solid #ddd;border-radius:6px;margin-bottom:8px;background:#f9f9f9;">
+    <div style="padding:12px;border:1px solid var(--card-border);border-radius:6px;margin-bottom:8px;background:var(--card-bg);color:var(--text-color);">
       <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
         <div style="display:flex;align-items:center;gap:8px;font-weight:600;">
           <span style="font-size:20px;">${sportEmoji[session.type] || '🏋️'}</span>
@@ -944,7 +1109,7 @@ function displaySessionHistory() {
         <div><span style="opacity:0.7;">Intensité:</span> ${intensityLabel[session.intensity]}</div>
         <div><span style="opacity:0.7;">Calories:</span> ${session.calories} kcal</div>
       </div>
-      ${session.notes ? `<div style="margin-top:8px;padding:8px;background:#fff;border-left:3px solid #d400ff;font-size:12px;">${session.notes}</div>` : ''}
+      ${session.notes ? `<div style="margin-top:8px;padding:8px;background:var(--input-bg);border-left:3px solid var(--primary-color);font-size:12px;">${session.notes}</div>` : ''}
     </div>
   `).join('');
 }
