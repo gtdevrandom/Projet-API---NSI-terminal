@@ -88,7 +88,7 @@
           </div>
           <div class="data-row">
             <span class="label">Charge entraînement :</span>
-            <span class="value">N/A</span>
+            <span class="value" id="home-training-load">N/A</span>
           </div>
         </div>
 
@@ -200,6 +200,18 @@
 
         <div class="card">
           <div class="card-title">Heatmap séances</div>
+          <div class="heatmap-legend">
+            <div style="font-size:12px;opacity:0.7;margin-bottom:8px;">5 dernières semaines</div>
+          </div>
+          <div class="heatmap-days-header">
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mer</div>
+            <div>Jeu</div>
+            <div>Ven</div>
+            <div>Sam</div>
+            <div>Dim</div>
+          </div>
           <div class="heatmap-grid">
             <div class="heatmap-cell active"></div>
             <div class="heatmap-cell active"></div>
@@ -208,6 +220,14 @@
             <div class="heatmap-cell inactive"></div>
             <div class="heatmap-cell active"></div>
             <div class="heatmap-cell inactive"></div>
+          </div>
+          <div class="heatmap-legend" style="margin-top:12px;">
+            <div style="display:flex;gap:16px;font-size:12px;opacity:0.8;">
+              <div style="display:flex;gap:6px;align-items:center;"><div style="width:16px;height:16px;background:var(--card-border);border-radius:4px;opacity:0.3;"></div> Repos</div>
+              <div style="display:flex;gap:6px;align-items:center;"><div style="width:16px;height:16px;background:var(--primary-color);border-radius:4px;opacity:0.35;"></div> Faible</div>
+              <div style="display:flex;gap:6px;align-items:center;"><div style="width:16px;height:16px;background:var(--primary-color);border-radius:4px;opacity:0.65;"></div> Modéré</div>
+              <div style="display:flex;gap:6px;align-items:center;"><div style="width:16px;height:16px;background:var(--primary-color);border-radius:4px;opacity:1;"></div> Élevé</div>
+            </div>
           </div>
         </div>
 

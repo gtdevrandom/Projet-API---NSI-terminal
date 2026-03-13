@@ -556,30 +556,47 @@ function generateSessionsHeatmap() {
   
   if (!heatmapGrid) return;
 
-  // Créer un calendrier des 30 derniers jours
+  // Créer un calendrier des 35 derniers jours (5 semaines)
   const today = new Date();
   const days = [];
   
-  for (let i = 29; i >= 0; i--) {
+  for (let i = 34; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
     
-    // Compter les séances pour ce jour
-    const sessionCount = sessions.filter(s => s.date === dateStr).length;
-    days.push({ date: dateStr, count: sessionCount });
+    // Calculer la charge de la journée (somme des durées pondérées par l'intensité)
+    const dayIntensity = sessions
+      .filter(s => s.date === dateStr)
+      .reduce((total, s) => {
+        const intensityMultiplier = s.intensity === 'elevee' ? 1.5 : s.intensity === 'modere' ? 1 : 0.5;
+        return total + (s.duration * intensityMultiplier);
+      }, 0);
+    
+    days.push({ date: dateStr, intensity: dayIntensity });
   }
 
-  // Générer les cellules
-  heatmapGrid.innerHTML = days.map(day => {
+  // Générer les cellules avec une grille de 7 colonnes (dimanche à samedi)
+  let html = days.map((day, index) => {
+    // Déterminer le jour de la semaine pour ce jour
+    const date = new Date(day.date);
+    const dayOfWeek = (date.getDay() + 6) % 7; // Lundi = 0
+    const isNewRow = dayOfWeek === 0;
+    
     let className = 'heatmap-cell';
-    if (day.count === 0) className += ' inactive';
-    else if (day.count === 1) className += ' active-low';
-    else if (day.count === 2) className += ' active-mid';
+    if (day.intensity === 0) className += ' inactive';
+    else if (day.intensity < 15) className += ' active-low';
+    else if (day.intensity < 30) className += ' active-mid';
     else className += ' active';
     
-    return `<div class="${className}" title="${day.date}: ${day.count} séance${day.count > 1 ? 's' : ''}"></div>`;
+    const dateObj = new Date(day.date);
+    const dayNum = dateObj.getDate();
+    const tooltip = `${day.date}: ${day.intensity > 0 ? day.intensity.toFixed(0) + ' pts' : 'Repos'}`;
+    
+    return `<div class="${className}" title="${tooltip}" data-date="${day.date}"><span class="day-num">${dayNum}</span></div>`;
   }).join('');
+  
+  heatmapGrid.innerHTML = html;
 }
 
 // Génère un encouragement pour les stats basé sur la progression
@@ -669,6 +686,29 @@ function displayGoals() {
   });
 }
 
+// Calcule la charge d'entraînement pour les 7 derniers jours
+function calculateTrainingLoad() {
+  const sessions = getSessionsData();
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  
+  const recentSessions = sessions.filter(s => new Date(s.date) >= sevenDaysAgo);
+  
+  if (recentSessions.length === 0) return 0;
+  
+  // Calculer la charge: durée * multiplicateur d'intensité
+  let totalLoad = 0;
+  recentSessions.forEach(session => {
+    const intensityMultiplier = 
+      session.intensity === 'elevee' ? 1.5 : 
+      session.intensity === 'modere' ? 1.0 : 
+      0.5;
+    totalLoad += session.duration * intensityMultiplier;
+  });
+  
+  return Math.round(totalLoad);
+}
+
 function displayHomeScreen() {
   const weightData = getWeightData();
   const sleepData = getSleepData();
@@ -706,6 +746,13 @@ function displayHomeScreen() {
   } else {
     document.getElementById('home-sleep').textContent = 'N/A';
     document.getElementById('home-sleep-text').textContent = 'N/A';
+  }
+  
+  // Mettre à jour la charge d'entraînement
+  const trainingLoad = calculateTrainingLoad();
+  const trainingLoadElement = document.getElementById('home-training-load');
+  if (trainingLoadElement) {
+    trainingLoadElement.textContent = trainingLoad > 0 ? trainingLoad + ' pts' : 'N/A';
   }
   
   // Mettre à jour la nutrition du jour sur l'accueil
@@ -1031,6 +1078,7 @@ function closeSessionForm() {
   updateSessionQuality();
   // Mettre à jour la heatmap et l'encouragement
   updateStatsScreen();
+  displayHomeScreen();
 }
 
 function saveSession() {
@@ -1117,10 +1165,12 @@ function displaySessionHistory() {
 function deleteSession(sessionId) {
   if (confirm('Êtes-vous sûr de vouloir supprimer cette séance ?')) {
     let data = getSessionsData();
-    data = data.filter(s => s.id != sessionId);
+    data = data.filter(s => s.id !== parseInt(sessionId));
     storage.set('sessionsData', data);
     displaySessionHistory();
     updateSessionQuality();
+    updateStatsScreen();
+    displayHomeScreen();
   }
 }
 
