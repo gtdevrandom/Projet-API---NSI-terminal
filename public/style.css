@@ -1,4 +1,10 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ====== RESET & VARIABLES ====== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
   --bg-color: #f2f2f2;
@@ -10,12 +16,14 @@
   --primary-color: #D400FF;
 }
 
+/* ====== BASE STYLES ====== */
+
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;  
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   background: var(--bg-color);
   color: var(--text-color);
   overflow: hidden;
@@ -27,6 +35,8 @@ body {
   align-items: stretch;
   min-height: 100vh;
 }
+
+/* ====== APP LAYOUT ====== */
 
 .app {
   width: 100%;
@@ -41,21 +51,24 @@ body {
   position: relative;
 }
 
+/* ====== HEADER ====== */
+
 .app-header {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 16px 16px;
+  padding: 8px 10px;
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0,201,177,0.2);
   position: relative;
+  padding-top: max(8px, env(safe-area-inset-top));
 }
 
 .app-header .logo-img {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 6px;
   object-fit: contain;
   position: absolute;
@@ -63,19 +76,21 @@ body {
 }
 
 .app-header h1 {
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 700;
   color: #fff;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   letter-spacing: 1px;
 }
 
+/* ====== SCREENS & CONTENT ====== */
+
 .screen {
   display: none;
   flex-direction: column;
   flex: 1;
   overflow-y: auto;
-  padding: 8px 6px 75px;
+  padding: 8px 6px 70px;
   gap: 6px;
   height: 100%;
 }
@@ -83,6 +98,8 @@ body {
 .screen.active {
   display: flex;
 }
+
+/* ====== CARDS ====== */
 
 .card {
   background: var(--card-bg);
@@ -100,6 +117,8 @@ body {
   color: var(--text-color);
   margin-bottom: 10px;
 }
+
+/* ====== DATA & TABLES ====== */
 
 .data-row {
   display: flex;
@@ -130,6 +149,8 @@ body {
   gap: 4px;
 }
 
+/* ====== PROGRESS BARS ====== */
+
 .progress-container {
   margin: 8px 0;
 }
@@ -157,6 +178,8 @@ body {
   border-radius: 4px;
   width: 0%;
 }
+
+/* ====== IMC INDICATOR ====== */
 
 .imc-bar-container {
   margin-top: 12px;
@@ -237,6 +260,8 @@ body {
   text-align: center;
 }
 
+/* ====== SCORES & BIG NUMBERS ====== */
+
 .score-big {
   font-size: 48px;
   font-weight: 700;
@@ -256,6 +281,20 @@ body {
   color: var(--text-color);
   margin-bottom: 6px;
 }
+
+.obj-percent {
+  font-size: 48px;
+  font-weight: 700;
+  color: #D400FF;
+  text-align: center;
+  padding: 16px 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ====== BUTTONS ====== */
 
 .btn-teal {
   background: var(--primary-color);
@@ -282,6 +321,21 @@ body {
   filter: brightness(0.75);
 }
 
+.btn-params {
+  background: #D400FF;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+/* ====== SESSIONS & ITEMS ====== */
+
 .session-item {
   background: var(--input-bg);
   border-radius: 8px;
@@ -291,6 +345,15 @@ body {
   text-align: center;
   border: 1px solid var(--input-border);
 }
+
+.session-history-container {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+/* ====== AI CARD ====== */
 
 .ia-card {
   background: var(--card-bg);
@@ -339,6 +402,8 @@ body {
   }
 }
 
+/* ====== HEATMAP ====== */
+
 .heatmap-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -358,12 +423,6 @@ body {
   font-weight: 600;
   color: var(--text-color);
   opacity: 0.6;
-}
-
-.heatmap-legend {
-  font-size: 12px;
-  color: var(--text-color);
-  opacity: 0.7;
 }
 
 .heatmap-cell {
@@ -394,7 +453,7 @@ body {
   text-align: center;
 }
 
-.heatmap-cell.active { 
+.heatmap-cell.active {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
   color: #fff;
   opacity: 1;
@@ -405,26 +464,79 @@ body {
   filter: brightness(1.2);
 }
 
-.heatmap-cell.active-low { 
+.heatmap-cell.active-low {
   background: var(--primary-color);
   color: #fff;
   opacity: 0.35;
   border-color: rgba(212, 0, 255, 0.15);
 }
 
-.heatmap-cell.active-mid { 
+.heatmap-cell.active-mid {
   background: var(--primary-color);
   color: #fff;
   opacity: 0.65;
   border-color: rgba(212, 0, 255, 0.25);
 }
 
-.heatmap-cell.inactive { 
+.heatmap-cell.inactive {
   background: var(--card-border);
   color: var(--text-color);
   opacity: 0.3;
   border-color: transparent;
 }
+
+.heatmap-legend {
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.heatmap-legend-header {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+.heatmap-legend-items {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.heatmap-legend-item {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.heatmap-legend-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.heatmap-box-repos {
+  background: var(--card-border);
+  opacity: 0.3;
+}
+
+.heatmap-box-faible {
+  background: var(--primary-color);
+  opacity: 0.35;
+}
+
+.heatmap-box-modere {
+  background: var(--primary-color);
+  opacity: 0.65;
+}
+
+.heatmap-box-eleve {
+  background: var(--primary-color);
+  opacity: 1;
+}
+
+/* ====== BOTTOM NAVIGATION ====== */
 
 .bottom-nav {
   position: absolute;
@@ -466,30 +578,7 @@ body {
   font-weight: 700;
 }
 
-.obj-percent {
-  font-size: 48px;
-  font-weight: 700;
-  color: #D400FF;
-  text-align: center;
-  padding: 16px 0;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-params {
-  background: #D400FF;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-}
+/* ====== MODAL ====== */
 
 .modal {
   display: none;
@@ -516,12 +605,6 @@ body {
   max-height: 80vh;
   overflow-y: auto;
   animation: slideUp 0.3s ease-out;
-}
-
-.modal-form {
-  border-radius: 16px;
-  margin: 20px;
-  max-height: none;
 }
 
 @keyframes slideUp {
@@ -570,6 +653,14 @@ body {
 .modal-body {
   padding: 20px;
 }
+
+.modal-form {
+  border-radius: 16px;
+  margin: 20px;
+  max-height: none;
+}
+
+/* ====== FORMS ====== */
 
 .form-group {
   margin-bottom: 16px;
@@ -625,6 +716,12 @@ body {
 .radio-label span {
   font-weight: 500;
 }
+
+.form-group-spacing {
+  margin-bottom: 12px;
+}
+
+/* ====== CHARTS & DATA ====== */
 
 .chart-container {
   position: relative;
@@ -685,72 +782,15 @@ body {
   color: #D400FF;
 }
 
+/* ====== SETTINGS & SELECT ====== */
+
 #settings-date-format {
   background: var(--input-bg);
   color: var(--text-color);
   border: 1px solid var(--input-border);
 }
 
-/* Utility classes for inline styles */
-.nutrition-text {
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-.empty-state {
-  text-align: center;
-  opacity: 0.6;
-  color: var(--text-color);
-}
-
-.foods-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin-top: 4px;
-}
-
-.food-search-item {
-  padding: 10px;
-  border: 1px solid var(--card-border);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: var(--card-bg);
-  color: var(--text-color);
-}
-
-.food-search-item:hover {
-  background: var(--input-bg);
-  opacity: 0.8;
-}
-
-.session-history-container {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin-top: 4px;
-}
-
-.goal-stat-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3px;
-}
-
-.goal-stat-value {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.goal-stat-label {
-  margin-bottom: 0;
-}
-
-.form-group-spacing {
-  margin-bottom: 12px;
-}
+/* ====== COLORS ====== */
 
 .color-picker-grid {
   display: flex;
@@ -800,6 +840,8 @@ body {
   background: #d400ff;
 }
 
+/* ====== SLEEP ====== */
+
 .sleep-duration-container {
   display: flex;
   gap: 8px;
@@ -819,10 +861,65 @@ body {
   opacity: 0.7;
 }
 
+/* ====== FOOD ====== */
+
+.foods-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.food-search-item {
+  padding: 10px;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+.food-search-item:hover {
+  background: var(--input-bg);
+  opacity: 0.8;
+}
+
 .food-details-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+/* ====== GOALS ====== */
+
+.goal-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.goal-stat-value {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.goal-stat-label {
+  margin-bottom: 0;
+}
+
+/* ====== UTILITIES ====== */
+
+.nutrition-text {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.empty-state {
+  text-align: center;
+  opacity: 0.6;
+  color: var(--text-color);
 }
 
 .modal-button-spacing {
@@ -841,51 +938,6 @@ body {
   line-height: 1.6;
 }
 
-.heatmap-legend-header {
-  font-size: 12px;
-  opacity: 0.7;
-  margin-bottom: 8px;
-}
-
-.heatmap-legend-items {
-  display: flex;
-  gap: 16px;
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-.heatmap-legend-item {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.heatmap-legend-box {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-}
-
-.heatmap-box-repos {
-  background: var(--card-border);
-  opacity: 0.3;
-}
-
-.heatmap-box-faible {
-  background: var(--primary-color);
-  opacity: 0.35;
-}
-
-.heatmap-box-modere {
-  background: var(--primary-color);
-  opacity: 0.65;
-}
-
-.heatmap-box-eleve {
-  background: var(--primary-color);
-  opacity: 1;
-}
-
 .about-copyright {
   font-size: 12px;
   opacity: 0.8;
@@ -901,172 +953,5 @@ body {
 
 .mt-12 {
   margin-top: 12px;
-}
-
-@media (max-width: 768px) {
-  body {
-    padding: 0;
-  }
-
-  .app {
-    border-radius: 0;
-  }
-
-  .app-header {
-    padding: 10px 14px;
-    gap: 10px;
-  }
-
-  .app-header .logo-img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .app-header h1 {
-    font-size: 20px;
-  }
-
-  .screen {
-    padding: 8px 6px 70px;
-    gap: 6px;
-  }
-
-  .card {
-    border-radius: 10px;
-    padding: 10px 12px;
-  }
-
-  .card-title {
-    font-size: 15px;
-  }
-
-  .data-row {
-    font-size: 13px;
-    padding: 4px 0;
-  }
-
-  .score-big {
-    font-size: 38px;
-  }
-
-  .score-label {
-    font-size: 14px;
-  }
-
-  .btn-teal {
-    padding: 11px 16px;
-    font-size: 14px;
-    border-radius: 10px;
-  }
-
-  .nav-label {
-    font-size: 9px;
-  }
-
-  .nav-icon {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    padding: 0;
-  }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .app {
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .app-header {
-    padding: 8px 10px;
-  }
-
-  .app-header h1 {
-    font-size: 18px;
-  }
-
-  .screen {
-    padding: 8px 6px 70px;
-    gap: 6px;
-    height: calc(100% - 60px);
-  }
-
-  .card {
-    padding: 10px 12px;
-    border-radius: 10px;
-  }
-
-  .card-title {
-    font-size: 13px;
-    margin-bottom: 6px;
-  }
-
-  .data-row {
-    font-size: 12px;
-    padding: 3px 0;
-  }
-
-  .score-big {
-    font-size: 34px;
-  }
-
-  .progress-label {
-    font-size: 11px;
-  }
-
-  .btn-teal {
-    padding: 10px 14px;
-    font-size: 13px;
-  }
-
-  .modal-content {
-    border-radius: 16px 16px 0 0;
-    max-height: 85vh;
-  }
-
-  .modal-header {
-    padding: 12px 14px;
-  }
-
-  .modal-header h2 {
-    font-size: 16px;
-  }
-
-  .modal-body {
-    padding: 14px;
-  }
-
-  .form-group input {
-    font-size: 13px;
-    padding: 9px 11px;
-  }
-
-  .bottom-nav {
-    padding: 6px 0 4px;
-    height: 60px;
-  }
-
-  .nav-label {
-    font-size: 8px;
-  }
-
-  .nav-icon {
-    font-size: 18px;
-  }
-
-  canvas {
-    max-height: 200px !important;
-  }
 }
 

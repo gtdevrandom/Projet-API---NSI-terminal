@@ -1,4 +1,7 @@
-// Récupère les données utilisateur
+// ==========================================
+// 1. RÉCUPÉRATION DES DONNÉES UTILISATEUR
+// ==========================================
+
 function getUserData() {
   const weightData = storage.get('weightData', []);
   const sleepData = storage.get('sleepData', []);
@@ -17,7 +20,10 @@ function getUserData() {
   };
 }
 
-// Formatte les données pour l'IA
+// ==========================================
+// 2. FORMATAGE DES DONNÉES POUR L'IA
+// ==========================================
+
 function formatDataForAI() {
   const data = getUserData();
   
@@ -36,7 +42,10 @@ function formatDataForAI() {
   };
 }
 
-// Fonction générique pour appeler l'IA
+// ==========================================
+// 3. APPEL API À L'IA
+// ==========================================
+
 async function callAI(prompt, maxTokens = 200) {
   try {
 
@@ -70,7 +79,11 @@ async function callAI(prompt, maxTokens = 200) {
   }
 }
 
-// Génère une suggestion nutritionnelle
+// ==========================================
+// 4. GÉNÉRATION DES SUGGESTIONS
+// ==========================================
+
+// 4.1 Suggestion Nutrition
 async function generateNutritionSuggestion() {
 
   const data = formatDataForAI();
@@ -85,7 +98,7 @@ Donne 3 suggestions courtes et pratiques pour améliorer l'alimentation. Répond
   return await callAI(prompt, 200);
 }
 
-// Génère une suggestion d'entraînement
+// 4.2 Suggestion Entraînement
 async function generateWorkoutSuggestion() {
 
   const data = formatDataForAI();
@@ -107,7 +120,7 @@ Donne une suggestion d'entraînement courte (2-3 phrases). Réponds en français
   return await callAI(prompt, 200);
 }
 
-// Génère une suggestion de sommeil
+// 4.3 Suggestion Sommeil
 async function generateSleepSuggestion() {
 
   const data = formatDataForAI();
@@ -124,7 +137,10 @@ Donne une suggestion pour améliorer le sommeil (2-3 phrases). Réponds en fran�
   return await callAI(prompt, 150);
 }
 
-// Met à jour les suggestions IA dans le HTML
+// ==========================================
+// 5. MISE À JOUR DES SUGGESTIONS DANS L'UI
+// ==========================================
+
 async function updateAllAISuggestions() {
 
   try {
@@ -152,7 +168,10 @@ async function updateAllAISuggestions() {
   }
 }
 
-// Rafraîchir les suggestions
+// ==========================================
+// 6. RAFRAÎCHISSEMENT DES SUGGESTIONS
+// ==========================================
+
 function refreshAISuggestions() {
   updateAllAISuggestions().catch(error =>
     console.error("Erreur rafraîchissement IA:", error)
@@ -161,7 +180,10 @@ function refreshAISuggestions() {
 
 window.refreshAISuggestions = refreshAISuggestions;
 
-// Chargement initial
+// ==========================================
+// 7. INITIALISATION ET MISE À JOUR AUTOMATIQUE
+// ==========================================
+
 document.addEventListener('DOMContentLoaded', () => {
 
   setTimeout(() => {
@@ -171,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Rafraîchir toutes les 2h
 setInterval(() => {
 
   updateAllAISuggestions();
@@ -179,7 +200,10 @@ setInterval(() => {
 
 }, 7200000);
 
-// Observer changements localStorage
+// ==========================================
+// 8. OBSERVATEUR DE STOCKAGE LOCALE
+// ==========================================
+
 const originalSet = Storage.prototype.setItem;
 
 Storage.prototype.setItem = function(key, value) {

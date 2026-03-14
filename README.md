@@ -1,138 +1,283 @@
-<img src="images/logo-512.png" alt="KaliFit logo" width="45"> KaliFit — PWA Fitness & Nutrition Intelligence 
+# 🏋️ KaliFit — Wiki <img src="images/logo-512.png" alt="KaliFit logo" width="45">
 ==============================================
 
-KaliFit est une Progressive Web App (PWA) dediee a la nutrition, la performance sportive et l'optimisation intelligente.
-Le nom KaliFit provient de Kalos Fitness (beaute et perfection en grec) combine avec Fit (fitness et performance).
+> **KaliFit** est une Progressive Web App (PWA) combinant nutrition et fitness, réalisée dans le cadre du projet NSI Terminale. Le nom est issu de *Kalos* (beauté et perfection en grec) et *Fit* (fitness et performance).
+
+🔗 **Application en ligne :** [kali-fit.vercel.app](https://kali-fit.vercel.app)  
+📦 **Dépôt :** [github.com/gtdevrandom/KaliFit](https://github.com/gtdevrandom/KaliFit)  
+📄 **Licence :** MIT
 
 ---
 
-Table des matieres
------------------
-1. [Fichiers du projet](#fichiers-du-projet)
-2. [Idees d'APIs et Strategie](#idees-dapis-et-strategie)
-3. [APIs et Services utilises](#apis-et-services-utilises)
-4. [Fonctionnalites de KaliFit](#fonctionnalites-de-kalifit)
-5. [APIs improbables et inutiles](#apis-improbables-et-inutiles)
-6. [Maquette et Logo](#maquette-et-logo)
-7. [References et Licence](#references-et-licence)
+## Table des matières
+
+1. [Présentation du projet](#1-présentation-du-projet)
+2. [Architecture et fichiers](#2-architecture-et-fichiers)
+3. [Fonctionnalités](#3-fonctionnalités)
+4. [APIs et services utilisés](#4-apis-et-services-utilisés)
+5. [Sécurité](#5-sécurité)
+6. [Installation et déploiement](#6-installation-et-déploiement)
+7. [PWA — Progressive Web App](#7-pwa--progressive-web-app)
+8. [Personnalisation et thèmes](#8-personnalisation-et-thèmes)
+9. [Maquette et design](#9-maquette-et-design)
+10. [Objectifs du projet (NSI)](#10-objectifs-du-projet-nsi)
+11. [Licence](#11-licence)
 
 ---
 
-Fichiers du projet
-------------------
+## 1. Présentation du projet
 
-Fichier                | Description
----------------------- | ----------------
-manifest.json          | Configuration PWA
-sw.js                  | Service Worker
-index.html             | Structure principale
-style.css              | Styles
-script.js              | Logique front-end
-api.js                 | Gestion des APIs
-favicon.ico            | Icone
-README.md              | Resume du projet
-LICENSE                | Licence MIT
+KaliFit est une application web progressive visant à centraliser la gestion de la santé et de la performance physique. Elle permet à l'utilisateur de :
+
+- Suivre son alimentation quotidienne (macronutriments, calories, qualité nutritionnelle)
+- Enregistrer et analyser ses séances sportives
+- Obtenir des recommandations personnalisées via un coach IA
+- Visualiser l'évolution de son poids, de son sommeil et de ses performances dans le temps
+
+Le projet a été réalisé en **HTML / CSS / JavaScript vanilla**, sans framework front-end, et déployé sur **Vercel**.
 
 ---
 
-Idees d'APIs et Strategie
--------------------------
+## 2. Architecture et fichiers
 
-Statut  | API / Fonctionnalite
-------- | --------------------
-Refuse  | Site meteo + qualite de l'air + autres informations
-Refuse  | API de trading
-Valide  | Integration Spotify, Deezer, Soundcharts, YouTube mp3
-Potentiel | YouTube, Twitch
-Gagnant  | Foods & Nutrition + IA avec Hugging Face
-Potentiel | SMS
-Refuse  | Plaque d'immatriculation / vehicule
-Refuse  | Images
-Refuse  | Cybersecurite
+```
+KaliFit/
+├── index.html          # Structure principale de l'application (SPA)
+├── style.css           # Feuille de styles globale
+├── script.js           # Logique front-end (interactions, données, UI)
+├── ai-config.js        # Configuration du module IA (Hugging Face)
+├── manifest.json       # Manifeste PWA
+├── sw.js               # Service Worker (cache hors-ligne)
+├── api/                # Fonctions serverless Vercel (proxy API sécurisé)
+├── images/             # Icônes PWA et assets visuels
+│   ├── logo-192.png
+│   └── logo-512.png
+├── maquette_figma/     # Captures de la maquette Figma
+│   ├── app.png
+│   └── pop_up.png
+├── LICENSE             # Licence MIT
+└── README.md           # Résumé du projet
+```
 
-Legende : Valide | Potentiel | Refuse | Gagnant
+### Rôle des fichiers clés
 
----
-
-APIs et Services utilises
-------------------------
-
-KaliFit repose sur une architecture robuste, privilegiant la securite des donnees et l'absence d'exposition de cles secretes cote client.
-
-Resume des services
-1. OpenFoodFacts : Recherche & Donnees nutritionnelles (publique, sans cle)
-2. Hugging Face : Coach IA & Analyse predictive (via Vercel Serverless)
-
-Details techniques
-- OpenFoodFacts (Nutrition)
-  Base de donnees mondiale.
-  Usage : Recherche par nom ou scan code-barres.
-  Acces libre.
-
-- Hugging Face (IA)
-  Generation de conseils et analyse intelligente via modeles de language.
-  
-  Architecture securisee :
-  - Le front-end envoie la requete a une Vercel Edge Function / API Route
-  - La cle API Hugging Face est stockee dans les variables d'environnement Vercel
-  - Appel de l'API Hugging Face via le proxy Vercel
-  - Retour uniquement de la reponse traitee au client
-
-Note de securite : Aucune cle API sensible n'est presente cote client.
+| Fichier | Description |
+|---|---|
+| `index.html` | Application monopage (SPA) avec toutes les vues intégrées |
+| `script.js` | Gestion des données utilisateur, navigation entre sections, appels API |
+| `ai-config.js` | Paramétrage des requêtes envoyées au modèle IA via le proxy Vercel |
+| `sw.js` | Service Worker permettant le fonctionnement hors-ligne et la mise en cache |
+| `manifest.json` | Déclaration PWA (icônes, thème, mode d'affichage standalone) |
+| `api/` | Routes serverless Vercel servant de proxy sécurisé vers Hugging Face |
 
 ---
 
-Fonctionnalites de KaliFit
---------------------------
+## 3. Fonctionnalités
 
-1. Profil biometrque intelligent : Poids, taille, age, sexe, objectif, calcul BMR/TDEE
-2. Tracker nutrition automatique : Scan, macros, micronutriments et score qualite
-3. Recommandations repas (IA) : Adaptees a l'entrainement du jour et aux objectifs
-4. Planification hebdomadaire intelligente : Planning repas/entrainement avec ajustement automatique
-5. Correlation globale : Analyse sport/nutrition/sommeil pour eviter le surentrainement
-6. Coach IA conversationnel : Reponses contextualisees aux questions utilisateur
-7. Score de recuperation : Indice 0-100 base sur la charge et le repos
-8. Suggestions d’optimisation : Conseils precis (ex : +15g proteines)
-9. Objectifs dynamiques : Ajustement automatique des calories selon la progression
-10. Dashboard analytics avance : Evolution poids, ratio performance/calories, heatmap
+### 🏠 Accueil — Dashboard
+
+- **Profil biométrique** : affichage du poids actuel et de l'IMC avec indicateur visuel (maigreur → obésité sévère)
+- **Nutrition du jour** : résumé des protéines, glucides, lipides et calories consommées
+- **Score de récupération** : indice 0-100 basé sur le sommeil et la charge d'entraînement
+- **Suggestions IA** : recommandations contextuelles affichées directement sur le dashboard
+
+### 🍎 Nutrition
+
+- **Recherche d'aliments** via l'API OpenFoodFacts (par nom ou code-barres)
+- **Ajout de portions** avec quantité personnalisable (en grammes)
+- **Calcul automatique** des macronutriments et des calories
+- **Score de qualité alimentaire** calculé à partir de la composition des aliments du jour
+- **Suggestions IA** adaptées à l'objectif de l'utilisateur (ex. : *"Augmente tes protéines de 15g"*)
+
+### 🏆 Sport
+
+- **Ajout de séances sportives** avec : date, type de sport, durée, intensité (faible / modérée / élevée), calories brûlées et notes libres
+- **Types disponibles** : cardio, musculation, yoga/stretching, football/basket, tennis/badminton, CrossFit/HIIT, autre
+- **Score de qualité de la séance** calculé selon l'intensité et la durée
+- **Historique des séances** consulatable
+- **Suggestions IA** sur le type d'entraînement selon l'objectif (masse, perte de graisse…)
+
+### 📊 Statistiques
+
+- **Graphique du poids** : suivi temporel avec possibilité d'ajouter des entrées
+- **Graphique du sommeil** : suivi de la durée de sommeil par nuit
+- **Ratio performance/calories** : indicateur de l'efficacité de l'entraînement
+- **Heatmap des séances** : visualisation sur les 5 dernières semaines (repos / faible / modéré / élevé)
+- **Masse grasse et masse musculaire** estimées
+- **Suggestions IA** sur la progression globale
+
+### 👤 Profil
+
+- Saisie des informations personnelles : prénom, nom, taille, année de naissance
+- Gestion des objectifs : poids cible, masse grasse, masse musculaire
+- Suivi de la progression vers les objectifs
+- Ajout du poids courant et du temps de sommeil
+
+### ⚙️ Paramètres
+
+- **Thème** : clair ou sombre
+- **Couleur secondaire** personnalisable
+- **Format des dates** : JJ/MM/YYYY, MM/DD/YYYY ou YYYY-MM-DD
+- **Vider le cache** : réinitialisation complète des données locales
 
 ---
 
-Objectifs :
------------
-- ~~Connecter trois api différentes **(2/2)**~~
-- ~~Différents thèmes~~
-- ~~application téléchargeable~~
-- ~~Optimisation Openfoodfact~~
-- ~~Ajout license sur le site~~
-- ~~Création logo~~ 
+## 4. APIs et services utilisés
+
+### OpenFoodFacts
+
+| Propriété | Valeur |
+|---|---|
+| Usage | Recherche d'aliments et récupération des données nutritionnelles |
+| Authentification | Aucune (base de données publique et ouverte) |
+| Endpoint | `https://world.openfoodfacts.org/cgi/search.pl` |
+| Format | JSON |
+
+OpenFoodFacts est une base de données mondiale collaborative listant des millions de produits alimentaires avec leurs compositions complètes (macronutriments, micronutriments, additifs, Nutri-Score…).
+
+### Hugging Face (IA)
+
+| Propriété | Valeur |
+|---|---|
+| Usage | Génération de conseils personnalisés et analyse prédictive |
+| Authentification | Clé API stockée dans les variables d'environnement Vercel |
+| Accès côté client | ❌ Jamais exposée (proxy serverless) |
+
+Le modèle de langage est interrogé via une **Vercel Serverless Function** qui fait office de proxy sécurisé. Le client ne communique jamais directement avec Hugging Face.
 
 ---
 
-APIs improbables et inutiles
----------------------------
+## 5. Sécurité
 
-Improbables :
-- API generatrice d'insulte
-- API generatrice de contenu a caractere sexuel
+L'architecture retenue garantit qu'**aucune clé API sensible n'est exposée côté client**.
 
-Inutiles :
-- Recherche d'utilisateur GitHub
-- Affichage aleatoire d'animaux
+```
+Navigateur (client)
+      │
+      │ Requête HTTPS (sans clé)
+      ▼
+Vercel Edge Function (api/)
+      │
+      │ Requête authentifiée (clé Hugging Face en variable d'environnement)
+      ▼
+API Hugging Face
+      │
+      │ Réponse IA
+      ▼
+Vercel Edge Function
+      │
+      │ Réponse traitée
+      ▼
+Navigateur (client)
+```
+
+Les données utilisateur (poids, séances, aliments) sont stockées **localement** dans le navigateur via `localStorage` et ne sont jamais envoyées à un serveur tiers.
 
 ---
 
-Maquette et Logo
-----------------
+## 6. Installation et déploiement
 
-- Une [maquette](maquette_figma/) fonctionnelle de l'application a ete realisee sur Figma.
-- Le logo de KaliFit a ete genere sur [drawio](https://draw.io).
-- Aperçu de la maquette : ![Maquette KaliFit](maquette_figma/app.png)![Maquette KaliFit](maquette_figma/pop_up.png)
+### Prérequis
+
+- Un compte [Vercel](https://vercel.com) (pour le déploiement)
+- Une clé API [Hugging Face](https://huggingface.co/settings/tokens)
+- Git
+
+### Étapes
+
+```bash
+# 1. Cloner le dépôt
+git clone https://github.com/gtdevrandom/KaliFit.git
+cd KaliFit
+
+# 2. Déployer sur Vercel
+vercel deploy
+```
+
+### Variables d'environnement à configurer sur Vercel
+
+| Variable | Description |
+|---|---|
+| `HUGGINGFACE_API_KEY` | Clé d'accès à l'API Hugging Face |
+
+> ⚠️ Ne jamais committer la clé API dans le code source.
+
+### Utilisation en local (sans IA)
+
+L'application peut être ouverte directement dans un navigateur via `index.html`. Les fonctionnalités IA seront inactives sans le proxy Vercel.
 
 ---
 
-References et Licence
---------------------
+## 7. PWA — Progressive Web App
 
-- Liste d'APIs gratuites : [RapidAPI](https://rapidapi.com/)
-- Licence : Ce projet est sous [license](LICENSE) MIT
+KaliFit est installable sur mobile et desktop comme une application native.
+
+### Fichiers PWA
+
+- **`manifest.json`** : déclare le nom, les icônes, la couleur de thème et le mode `standalone`
+- **`sw.js`** : Service Worker gérant la mise en cache des ressources pour un fonctionnement hors-ligne
+
+### Installation
+
+Sur mobile (Chrome / Safari) : appuyer sur *"Ajouter à l'écran d'accueil"*  
+Sur desktop (Chrome / Edge) : cliquer sur l'icône d'installation dans la barre d'adresse
+
+---
+
+## 8. Personnalisation et thèmes
+
+KaliFit propose deux thèmes visuels (clair / sombre) et une couleur d'accentuation personnalisable, configurables depuis la section **Paramètres**. Les préférences sont sauvegardées localement.
+
+---
+
+## 9. Maquette et design
+
+La maquette de l'application a été réalisée sur **Figma** avant le développement. Les exports sont disponibles dans le dossier [`maquette_figma/`](maquette_figma/).
+
+Le logo a été créé avec **draw.io** et est fourni en deux résolutions : 192×192 px et 512×512 px (formats requis par le manifeste PWA).
+
+---
+
+## 10. Objectifs du projet (NSI)
+
+Ce projet a été réalisé dans le cadre du cours **Numérique et Sciences Informatiques (NSI) — Terminale**, avec pour objectif d'explorer l'utilisation d'APIs externes dans une application web.
+
+### Objectifs atteints ✅
+
+- [x] Connecter plusieurs APIs différentes (OpenFoodFacts + Hugging Face)
+- [x] Différents thèmes (clair / sombre)
+- [x] Application téléchargeable (PWA installable)
+- [x] Optimisation de l'intégration OpenFoodFacts
+- [x] Ajout d'une licence sur le site
+- [x] Création d'un logo
+
+### APIs étudiées et évaluées
+
+| Statut | API / Idée |
+|---|---|
+| ✅ Retenu | OpenFoodFacts — données nutritionnelles |
+| ✅ Retenu | Hugging Face — IA conversationnelle |
+| ⚠️ Potentiel | Spotify / Deezer / YouTube — musique d'entraînement |
+| ❌ Refusé | API météo / qualité de l'air |
+| ❌ Refusé | API de trading |
+| ❌ Refusé | API de reconnaissance de plaques d'immatriculation |
+| ❌ Refusé | APIs d'images |
+| ❌ Refusé | APIs de cybersécurité |
+
+---
+
+## 11. Licence
+
+Ce projet est distribué sous licence **MIT**.
+
+```
+MIT License — Copyright (c) 2026 gtdevrandom
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software.
+```
+
+Voir le fichier [LICENSE](LICENSE) pour le texte complet.

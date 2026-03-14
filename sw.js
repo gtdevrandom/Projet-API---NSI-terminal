@@ -2,11 +2,11 @@ const CACHE_NAME = 'kalifi-v1';
 const ASSETS = [
   './',
   './index.html',
-  './style.css',
-  './script.js',
+  './public/style.css',
+  './src/script.js',
   './manifest.json',
-  './images/logo-192.png',
-  './images/logo-512.png'
+  './public/images/logo-192.png',
+  './public/images/logo-512.png'
 ];
 
 self.addEventListener('install', (e) => {
