@@ -1,0 +1,11 @@
+{
+  "buildCommand": "echo 'Static site ready'",
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+
