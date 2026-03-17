@@ -42,21 +42,28 @@ Le projet a été réalisé en **HTML / CSS / JavaScript vanilla**, sans framewo
 
 ```
 KaliFit/
-├── index.html          # Structure principale de l'application (SPA)
-├── style.css           # Feuille de styles globale
+┌── index.html          # Structure principale de l'application (SPA)
 ├── script.js           # Logique front-end (interactions, données, UI)
-├── ai-config.js        # Configuration du module IA (Hugging Face)
 ├── manifest.json       # Manifeste PWA
 ├── sw.js               # Service Worker (cache hors-ligne)
+├── LICENSE             # Licence MIT
+├── README.md           # Résumé du projet
 ├── api/                # Fonctions serverless Vercel (proxy API sécurisé)
-├── images/             # Icônes PWA et assets visuels
-│   ├── logo-192.png
-│   └── logo-512.png
+│   └── ai.js
+├── src/
+│   └── script.js
+├── config/
+│   ├── ai-config.js    # Configuration du module IA (Hugging Face)
+│   └── openfoodfacts.js
+├── public/
+│   ├── style.css       # Feuille de styles globale
+│   └── images/         # Icônes PWA et assets visuels
+│      ├── logo-192.png
+│      └── logo-512.png
 ├── maquette_figma/     # Captures de la maquette Figma
 │   ├── app.png
-│   └── pop_up.png
-├── LICENSE             # Licence MIT
-└── README.md           # Résumé du projet
+└── └── pop_up.png
+
 ```
 
 ### Rôle des fichiers clés
