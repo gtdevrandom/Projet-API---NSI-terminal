@@ -262,9 +262,9 @@ Ce projet a été réalisé dans le cadre du cours **Numérique et Sciences Info
 
 | Statut | API / Idée |
 |---|---|
-| ✅ Retenu | OpenFoodFacts — données nutritionnelles |
-| ✅ Retenu | Hugging Face — IA conversationnelle |
-| ⚠️ Potentiel | Spotify / Deezer / YouTube — musique d'entraînement |
+| ✅ Retenu | OpenFoodFacts - données nutritionnelles |
+| ✅ Retenu | Hugging Face - IA conversationnelle |
+| ⚠️ Potentiel | Spotify / Deezer / YouTube - musique d'entraînement |
 | ❌ Refusé | API météo / qualité de l'air |
 | ❌ Refusé | API de trading |
 | ❌ Refusé | API de reconnaissance de plaques d'immatriculation |
