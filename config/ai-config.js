@@ -120,23 +120,6 @@ Donne une suggestion d'entraînement courte (2-3 phrases). Réponds en français
   return await callAI(prompt, 200);
 }
 
-// 4.3 Suggestion Sommeil
-async function generateSleepSuggestion() {
-
-  const data = formatDataForAI();
-
-  const sleepInfo = data.lastSleep
-    ? `Sommeil dernière nuit: ${data.lastSleep}h`
-    : "Pas de données de sommeil";
-
-  const prompt = `Tu es un expert en sommeil et santé.
-${sleepInfo}
-
-Donne une suggestion pour améliorer le sommeil (2-3 phrases). Réponds en français.`;
-
-  return await callAI(prompt, 150);
-}
-
 // ==========================================
 // 5. MISE À JOUR DES SUGGESTIONS DANS L'UI
 // ==========================================
