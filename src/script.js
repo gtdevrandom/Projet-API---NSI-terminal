@@ -722,11 +722,12 @@ function generateProgressEncouragement() {
 function updateStatsScreen() {
   generateSessionsHeatmap();
   
-  const encouragementText = document.querySelector('#screen-stats .ia-text');
-  if (encouragementText) {
-    encouragementText.textContent = generateProgressEncouragement();
+  // Utiliser la suggestion IA pour l'encouragement au lieu du message statique
+  if (window.refreshAISuggestions) {
+    window.refreshAISuggestions();
   }
 }
+
 
 function displayGoals() {
   const goals = getGoals();

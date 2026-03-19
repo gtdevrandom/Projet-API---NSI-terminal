@@ -120,6 +120,82 @@ Donne une suggestion d'entraînement courte (2-3 phrases). Réponds en français
   return await callAI(prompt, 200);
 }
 
+// 4.3 Suggestion Statistiques & Encouragement
+async function generateStatisticsSuggestion() {
+
+  const data = getUserData();
+  
+  // Calcul des statistiques
+  const weightData = data.weight;
+  const sessions = data.sessions;
+  const sleepData = data.sleep;
+  const goals = data.goals;
+  
+  // Poids
+  let weightProgress = "";
+  if (weightData.length >= 2) {
+    const currentWeight = weightData[weightData.length - 1].value;
+    const startWeight = weightData[0].value;
+    const change = startWeight - currentWeight;
+    if (change > 0) {
+      weightProgress = `Perte de ${change.toFixed(1)}kg (${startWeight}kg → ${currentWeight}kg)`;
+    } else if (change < 0) {
+      weightProgress = `Prise de ${Math.abs(change).toFixed(1)}kg (${startWeight}kg → ${currentWeight}kg)`;
+    } else {
+      weightProgress = `Poids stable à ${currentWeight}kg`;
+    }
+  } else if (weightData.length === 1) {
+    weightProgress = `Poids initial: ${weightData[0].value}kg`;
+  } else {
+    weightProgress = "Aucune donnée de poids";
+  }
+  
+  // Séances
+  let sessionsStats = "Aucune séance enregistrée";
+  if (sessions.length > 0) {
+    const thisWeekSessions = sessions.filter(s => {
+      const sessionDate = new Date(s.date);
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      return sessionDate >= oneWeekAgo;
+    }).length;
+    
+    const totalSessions = sessions.length;
+    const avgDuration = Math.round(sessions.reduce((sum, s) => sum + (s.duration || 0), 0) / sessions.length);
+    sessionsStats = `${totalSessions} séances totales, ${thisWeekSessions} cette semaine, ${avgDuration}min en moyenne`;
+  }
+  
+  // Sommeil
+  let sleepStats = "Aucune donnée de sommeil";
+  if (sleepData.length > 0) {
+    const avgSleep = (sleepData.reduce((sum, s) => sum + s.duration, 0) / sleepData.length).toFixed(1);
+    const lastSleep = sleepData[sleepData.length - 1].duration;
+    sleepStats = `Sommeil moyen: ${avgSleep}h, Dernière nuit: ${lastSleep}h`;
+  }
+  
+  // Objectifs
+  let goalInfo = "Aucun objectif défini";
+  if (goals.weightGoal && goals.weight) {
+    const direction = goals.weightGoal === 'lose' ? 'perdre' : 'gagner';
+    goalInfo = `Objectif: ${direction} pour atteindre ${goals.weight}kg`;
+  }
+  
+  const prompt = `Tu es un coach fitness bienveillant et motivant. Basé sur les statistiques suivantes de l'utilisateur:
+- Progression poids: ${weightProgress}
+- Entraînements: ${sessionsStats}
+- Sommeil: ${sleepStats}
+- Objectif: ${goalInfo}
+
+Donne un message d'encouragement court (2-3 phrases maximum) qui:
+1. Reconnaît les efforts et la progression
+2. Motive l'utilisateur à continuer
+3. Donne un conseil spécifique basé sur ses données
+
+Réponds en français. Ne fait pas de mise en forme (gras, italique, etc.) et ne fait pas sous forme de points.`;
+
+  return await callAI(prompt, 250);
+}
+
 // ==========================================
 // 5. MISE À JOUR DES SUGGESTIONS DANS L'UI
 // ==========================================
@@ -143,6 +219,15 @@ async function updateAllAISuggestions() {
       if (workoutCard) {
         workoutCard.innerHTML = workoutSuggestion.split('\n').slice(0,3).join('<br>');
         workoutCard.classList.add('ia-updated');
+      }
+    }
+
+    const statisticsSuggestion = await generateStatisticsSuggestion();
+    if (statisticsSuggestion) {
+      const statsCard = document.querySelector('#screen-stats .ia-text');
+      if (statsCard) {
+        statsCard.innerHTML = statisticsSuggestion.split('\n').slice(0,3).join('<br>');
+        statsCard.classList.add('ia-updated');
       }
     }
 
