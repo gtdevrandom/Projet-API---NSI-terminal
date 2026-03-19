@@ -147,6 +147,7 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
+  filter: brightness(0.75);
 }
 
 /* ====== PROGRESS BARS ====== */
@@ -273,6 +274,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  filter: brightness(0.75);
 }
 
 .score-label {
@@ -292,6 +294,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  filter: brightness(0.75);
 }
 
 /* ====== BUTTONS ====== */
@@ -580,6 +583,7 @@ body {
 .nav-item.active .nav-label {
   color: var(--primary-color);
   font-weight: 700;
+  filter: brightness(0.6);
 }
 
 /* ====== MODAL ====== */
@@ -754,6 +758,7 @@ body {
 .data-item .value {
   color: #D400FF;
   font-weight: 700;
+  filter: brightness(0.75);
 }
 
 .average-box {
