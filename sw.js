@@ -5,7 +5,7 @@ const ASSETS = [
   './public/style.css',
   './src/script.js',
   './manifest.json',
-  './public/images/logo-192.webp',
+  './public/images/logo/logo-192.webp',
   './public/images/logo-512.webp'
 ];
 
