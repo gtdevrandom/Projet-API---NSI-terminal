@@ -62,11 +62,14 @@ KaliFit/
 ├── public/
 │   ├── style.css         # Feuille de styles globale
 │   └── images/           # Icônes PWA et assets visuels
-│      ├── logo-192.png
-│      └── logo-512.png
+│      ├── lighthouse.webp
+│      ├── logo.drawio
+│      ├── logo-192.webp
+│      └── logo-512.webp
 ├── maquette_figma/       # Captures de la maquette Figma
-│   ├── app.png
-└── └── pop_up.png
+│   ├── app.webp
+│   ├── kalifit.fig
+└── └── pop_up.webp
 
 ```
 
@@ -295,7 +298,7 @@ KaliFit étant une application monopage (SPA), le sitemap contient une seule ent
 
 ### Résultats obtenus
 
-![Rapport Lighthouse de KaliFit](public/images/lighthouse.png)
+![Rapport Lighthouse de KaliFit](public/images/lighthouse.webp)
 
 | Catégorie | Score | Description |
 |---|---|---|
