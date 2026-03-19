@@ -49,6 +49,8 @@ KaliFit/
 ├── manifest.json         # Manifeste PWA
 ├── sw.js                 # Service Worker (cache hors-ligne)
 ├── LICENSE               # Licence MIT
+├── robots.txt
+├── sitemap.xml
 ├── README.md             # Résumé du projet
 ├── api/                  # Fonctions serverless Vercel (proxy API sécurisé)
 │   └── ai.js

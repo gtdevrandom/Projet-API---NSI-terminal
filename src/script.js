@@ -553,14 +553,14 @@ function updateManifestTheme(themeColor, bgColor) {
     description: 'Application d\'entraînement physique et de nutrition',
     icons: [
       {
-        src: './public/images/logo-192.png',
-        type: 'image/png',
+        src: './public/images/logo-192.webp',
+        type: 'image/webp',
         sizes: '192x192',
         purpose: 'any maskable'
       },
       {
-        src: './public/images/logo-512.png',
-        type: 'image/png',
+        src: './public/images/logo-512.webp',
+        type: 'image/webp',
         sizes: '512x512',
         purpose: 'any maskable'
       }
@@ -577,7 +577,7 @@ function updateManifestTheme(themeColor, bgColor) {
         short_name: 'Accueil',
         description: 'Aller à la page d\'accueil',
         url: './',
-        icons: [{ src: './public/images/logo-192.png', sizes: '192x192' }]
+        icons: [{ src: './public/images/logo-192.webp', sizes: '192x192' }]
       }
     ]
   };
