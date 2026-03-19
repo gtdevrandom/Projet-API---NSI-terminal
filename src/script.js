@@ -6,6 +6,19 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').catch(() => {});
 }
 
+// Lazy load config files
+const lazyLoadScript = (src) => {
+  if (!window.loadedScripts) window.loadedScripts = new Set();
+  if (window.loadedScripts.has(src)) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => { window.loadedScripts.add(src); resolve(); };
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+};
+
 // ============================================
 // STORAGE & CONFIGURATION
 // ============================================

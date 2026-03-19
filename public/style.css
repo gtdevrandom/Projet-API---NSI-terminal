@@ -576,15 +576,27 @@ body {
 
 .nav-label {
   font-size: 10px;
-  color: var(--text-color);
-  opacity: 0.6;
-  filter: brightness(1.2);
+  font-weight: 500;
+}
+
+.light .nav-label {
+  color: #333333;
+}
+
+.dark .nav-label {
+  color: #e0e0e0;
 }
 
 .nav-item.active .nav-label {
-  color: var(--primary-color);
   font-weight: 700;
-  filter: brightness(0.5);
+}
+
+.light .nav-item.active .nav-label {
+  color: #8800cc;
+}
+
+.dark .nav-item.active .nav-label {
+  color: #ff99ff;
 }
 
 /* ====== MODAL ====== */
