@@ -318,6 +318,15 @@
             <label>Année de naissance :</label>
             <input type="number" id="settings-birth-year" placeholder="1990" min="1900" max="2099" />
           </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Aliments & Allergies</div>
+          <div class="form-group form-group-spacing">
+            <label>Aliments non aimés / Allergies :</label>
+            <textarea id="settings-allergies" placeholder="Ex: Cacahuètes, Lactose, Champignons..." style="min-height: 80px; padding: 8px; border-radius: 4px; font-family: inherit; font-size: inherit;"></textarea>
+          </div>
+          <p style="font-size: 12px; color: #999; margin-top: 8px;">Énumérez les aliments séparés par des virgules. Ces informations seront utilisées pour personnaliser les conseils de repas.</p>
           <button class="btn-teal" onclick="saveSettings()">Enregistrer</button>
         </div>
 

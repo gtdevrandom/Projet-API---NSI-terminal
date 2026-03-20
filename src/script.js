@@ -81,7 +81,7 @@ const getGoals = () => storage.get('goals', {
   weightStart: null, fatStart: null, muscleStart: null
 });
 const getSettings = () => storage.get('settings', {
-  firstname: '', lastname: '', height: '', birthYear: '', theme: 'light', dateFormat: 'fr', secondaryColor: '#d400ffff'
+  firstname: '', lastname: '', height: '', birthYear: '', theme: 'light', dateFormat: 'fr', secondaryColor: '#d400ffff', allergies: ''
 });
 
 function getChartConfig() {
@@ -485,6 +485,7 @@ function openSettings() {
   document.getElementById('settings-lastname').value = settings.lastname || '';
   document.getElementById('settings-height').value = settings.height || '';
   document.getElementById('settings-birth-year').value = settings.birthYear || '';
+  document.getElementById('settings-allergies').value = settings.allergies || '';
   document.getElementById('settings-date-format').value = settings.dateFormat || 'fr';
   document.getElementById('settings-secondary-color').value = settings.secondaryColor || '#d400ffff';
   
@@ -506,6 +507,7 @@ function saveSettings() {
   settings.lastname = document.getElementById('settings-lastname').value;
   settings.height = document.getElementById('settings-height').value;
   settings.birthYear = document.getElementById('settings-birth-year').value;
+  settings.allergies = document.getElementById('settings-allergies').value;
   save.settings(settings);
   alert('Informations personnelles sauvegardées');
 }

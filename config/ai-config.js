@@ -38,7 +38,8 @@ function formatDataForAI() {
     goal: data.goals.weightGoal || null,
     lastSleep: lastSleep,
     recentMeals: recentMeals,
-    recentSessions: recentSessions
+    recentSessions: recentSessions,
+    allergies: data.settings.allergies || null
   };
 }
 
@@ -92,8 +93,14 @@ async function generateNutritionSuggestion() {
     ? data.recentMeals.map(m => `${m.date}: ${m.name}`).join(', ')
     : "Aucun repas enregistré";
 
+  const allergiesText = data.allergies 
+    ? `Aliments à éviter absolument: ${data.allergies}`
+    : "Pas d'allergies ou aliments non aimés signalés";
+
   const prompt = `Tu es un nutritionniste expert. Basé sur les repas récents: ${mealsText}
-Donne 1 suggestion courte et pratique pour améliorer l'alimentation. Réponds en français.Ne fait pas de mise en forme (gras, italique, etc.) et ne fait pas sous forme de points.`;
+${allergiesText}
+
+Donne 1 suggestion courte et pratique pour améliorer l'alimentation. Réponds en français. Ne fait pas de mise en forme (gras, italique, etc.) et ne fait pas sous forme de points.`;
 
   return await callAI(prompt, 200);
 }
