@@ -355,7 +355,7 @@ Ce projet a été réalisé dans le cadre du cours **Numérique et Sciences Info
 
 ## 13. Licence
 
-Ce projet est distribué sous licence **MIT**.
+Ce projet (photos et code) est distribué sous licence **MIT**.
 
 ```
 MIT License — Copyright (c) 2026 gtdevrandom
