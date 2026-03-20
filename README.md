@@ -19,11 +19,12 @@
 6. [Installation et déploiement](#6-installation-et-déploiement)
 7. [PWA — Progressive Web App](#7-pwa--progressive-web-app)
 8. [Personnalisation et thèmes](#8-personnalisation-et-thèmes)
-9. [Maquette et design](#9-maquette-et-design)
-10. [Référencement et SEO](#10-référencement-et-seo)
-11. [Performance — Rapport Lighthouse](#11-performance--rapport-lighthouse)
-12. [Objectifs du projet (NSI)](#12-objectifs-du-projet-nsi)
-13. [Licence](#13-licence)
+9. [Exportation et importation des données](#9-exportation-et-importation-des-données)
+10. [Maquette et design](#10-maquette-et-design)
+11. [Référencement et SEO](#11-référencement-et-seo)
+12. [Performance — Rapport Lighthouse](#12-performance--rapport-lighthouse)
+13. [Objectifs du projet (NSI)](#13-objectifs-du-projet-nsi)
+14. [Licence](#14-licence)
 
 ---
 
@@ -258,7 +259,96 @@ KaliFit propose deux thèmes visuels (clair / sombre) et une couleur d'accentuat
 
 ---
 
-## 9. Maquette et design
+## 9. Exportation et importation des données
+
+### Sauvegarde sécurisée de vos données
+
+KaliFit permet à l'utilisateur d'exporter toutes ses données personnelles dans un fichier JSON et de les réimporter ultérieurement. Cette fonctionnalité garantit une **sauvegarde complète et portable** de toutes les informations.
+
+### 📥 Exporter ses données
+
+L'export génère un fichier JSON contenant :
+
+- ✅ **Paramètres personnels** : prénom, nom, taille, année de naissance, allergies
+- ✅ **Préférences** : thème, couleur secondaire, format de date
+- ✅ **Objectifs** : poids cible, masse grasse, masse musculaire et valeurs initiales
+- ✅ **Poids** : historique complet des pesées avec dates et valeurs
+- ✅ **Sommeil** : durée de sommeil enregistrée pour chaque nuit
+- ✅ **Séances sportives** : type, durée, intensité, calories brûlées et notes
+- ✅ **Nutrition** : aliments consommés avec macronutriments et calories
+
+**Procédure** :
+1. Accéder à la section **Paramètres** (onglet ⚙️)
+2. Cliquer sur le bouton **💾 Exporter mes données**
+3. Un fichier `KaliFit_export_YYYY-MM-DD.json` est téléchargé automatiquement
+
+> 💡 Le nom du fichier inclut la date d'export pour faciliter l'organisation et la traçabilité.
+
+### 📤 Importer ses données
+
+L'import remplace ou restaure l'ensemble des données utilisateur à partir d'un fichier JSON préalablement exporté.
+
+**Procédure** :
+1. Accéder à la section **Paramètres** (onglet ⚙️)
+2. Cliquer sur le bouton **📥 Importer mes données**
+3. Sélectionner un fichier JSON valide exporté depuis KaliFit
+4. Confirmer l'opération (⚠️ cela remplacera les données actuelles)
+5. La page se recharge automatiquement avec les nouvelles données
+
+> ⚠️ **Important** : L'importation est définitive et remplace toutes les données existantes. Il est recommandé de faire une sauvegarde (export) avant d'importer des données.
+
+### Format du fichier exporté
+
+Le fichier JSON exporté a la structure suivante :
+
+```json
+{
+  "version": "1.0",
+  "exportDate": "2026-03-20T14:30:45.123Z",
+  "data": {
+    "settings": {
+      "firstname": "Jean",
+      "lastname": "Dupont",
+      "height": "180",
+      "birthYear": "1990",
+      "theme": "dark",
+      "dateFormat": "fr",
+      "secondaryColor": "#d400ff",
+      "allergies": "Cacahuètes, Lactose"
+    },
+    "goals": {
+      "weight": 75,
+      "fat": 15,
+      "muscle": 35,
+      "weightStart": 85,
+      "fatStart": 25,
+      "muscleStart": 25,
+      "weightGoal": "lose"
+    },
+    "weightData": [
+      { "date": "2026-03-15", "value": 82.5 },
+      { "date": "2026-03-20", "value": 81.8 }
+    ],
+    "sleepData": [
+      { "date": "2026-03-19", "value": 7.5 },
+      { "date": "2026-03-20", "value": 8 }
+    ],
+    "sessionsData": [
+      { "date": "2026-03-20", "type": "cardio", "duration": 45, "intensity": "moderate", "calories": 520, "notes": "Course rapide" }
+    ],
+    "nutritionData": { "2026-03-20": [...] }
+  }
+}
+```
+## Sécurité et confidentialité
+
+- ✅ **Stockage local uniquement** : les données ne quittent jamais votre navigateur sauf lors d'une export volontaire
+- ✅ **Pas de serveur** : aucune donnée n'est envoyée à un serveur distant
+- ✅ **Format JSON lisible** : les fichiers exportés sont en JSON standard (lisible et scriptable)
+
+---
+
+## 10. Maquette et design
 
 La maquette de l'application a été réalisée sur **Figma** avant le développement. Les exports sont disponibles dans le dossier [`maquette_figma/`](maquette_figma/).
 
@@ -266,7 +356,7 @@ Le logo a été créé avec **draw.io** et est fourni en deux résolutions : 192
 
 ---
 
-## 10. Référencement et SEO
+## 11. Référencement et SEO
 
 Deux fichiers standards sont inclus à la racine du projet pour améliorer l'indexation et le référencement de l'application.
 
@@ -306,7 +396,7 @@ KaliFit étant une application monopage (SPA), le sitemap contient une seule ent
 
 ---
 
-## 11. Performance — Rapport Lighthouse
+## 12. Performance — Rapport Lighthouse
 
 [Lighthouse](https://developer.chrome.com/docs/lighthouse/) est un outil d'audit automatisé intégré à Google Chrome (DevTools) qui évalue la qualité d'une application web selon quatre critères principaux.
 
@@ -325,7 +415,7 @@ KaliFit étant une application monopage (SPA), le sitemap contient une seule ent
 
 ---
 
-## 12. Objectifs du projet (NSI)
+## 13. Objectifs du projet (NSI)
 
 Ce projet a été réalisé dans le cadre du cours **Numérique et Sciences Informatiques (NSI) — Terminale**, avec pour objectif d'explorer l'utilisation d'APIs externes dans une application web.
 
@@ -353,7 +443,7 @@ Ce projet a été réalisé dans le cadre du cours **Numérique et Sciences Info
 
 ---
 
-## 13. Licence
+## 14. Licence
 
 Ce projet (photos et code) est distribué sous licence **MIT**.
 
