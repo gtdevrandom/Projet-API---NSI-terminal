@@ -409,10 +409,14 @@ body {
   color: var(--text-color);
   line-height: 1.5;
   flex: 1;
-  display: flex;
-  align-items: center;
+  display: block;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
   opacity: 0.9;
   transition: all 0.3s ease-in-out;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .ia-text.ia-updated {
