@@ -98,12 +98,23 @@ async function searchFoodsWithAI(query) {
   try {
     const prompt = `L'utilisateur recherche des aliments: "${query}". 
 Suggère 5 aliments courants et populaires qui correspondent à cette recherche.
-Pour chaque aliment, donne le nom et la marque si applicable.
-Formate ta réponse comme une liste avec le nom et la marque séparés par " | ".
-Exemple:
-- Pomme | Non applicable
-- Pain complet | Boulangerie générique
-Ne fais pas de formatage (gras, italique).`;
+Pour chaque aliment, donne ces informations et SEULEMENT ces informations, séparées par des pipes "|":
+1. Nom de l'aliment
+2. Marque ou source
+3. Calories pour 100g
+4. Protéines pour 100g (en grammes)
+5. Glucides pour 100g (en grammes)
+6. Lipides pour 100g (en grammes)
+
+Format exact:
+- Nom | Marque | Calories | Protéines | Glucides | Lipides
+
+Exemples:
+- Pomme | Nature | 52 | 0.3 | 14 | 0.2
+- Pain complet | Boulangerie générique | 240 | 8 | 43 | 3.3
+- Poulet rôti | Générique | 165 | 31 | 0 | 3.6
+
+Ne fais pas d'autre formatage, juste la liste.`;
 
     const response = await fetch("/api/ai", {
       method: "POST",
@@ -113,11 +124,11 @@ Ne fais pas de formatage (gras, italique).`;
       body: JSON.stringify({
         model: "meta-llama/Meta-Llama-3-8B-Instruct",
         messages: [
-          { role: "system", content: "Tu es un expert en nutrition. Donne des suggestions d'aliments courantes et populaires." },
+          { role: "system", content: "Tu es un expert en nutrition. Donne des données nutritionnelles réalistes et précises. Réponds en suivant EXACTEMENT le format demandé." },
           { role: "user", content: prompt }
         ],
-        max_tokens: 300,
-        temperature: 0.7
+        max_tokens: 400,
+        temperature: 0.5
       })
     });
 
@@ -130,15 +141,25 @@ Ne fais pas de formatage (gras, italique).`;
       // Convertir les suggestions IA en format similaire aux résultats OpenFoodFacts
       foodSearchResults = foods.map((line, idx) => {
         const cleanLine = line.replace(/^-\s*/, '').trim();
-        const parts = cleanLine.split('|');
+        const parts = cleanLine.split('|').map(p => p.trim());
+        
+        // Parser: Nom | Marque | Calories | Protéines | Glucides | Lipides
+        const name = parts[0] || `Aliment ${idx + 1}`;
+        const brand = parts[1] || 'Suggestion IA';
+        const calories = parseFloat(parts[2]) || 100;
+        const proteins = parseFloat(parts[3]) || 0;
+        const carbs = parseFloat(parts[4]) || 10;
+        const fats = parseFloat(parts[5]) || 0;
+        
         return {
-          product_name: parts[0]?.trim() || `Aliment ${idx + 1}`,
-          brands: parts[1]?.trim() || 'Suggestion IA',
+          product_name: name,
+          brands: brand,
           nutriments: {
-            energy_kcal: 150 + (idx * 20),
-            proteins_100g: 5 + (idx * 0.5),
-            carbohydrates_100g: 20,
-            fat_100g: 5
+            energy_kcal: calories,
+            proteins_100g: proteins,
+            carbohydrates_100g: carbs,
+            fat_100g: fats,
+            energy_100g: calories // Fallback
           },
           from_ai: true
         };
