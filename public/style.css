@@ -18,6 +18,30 @@
   --primary-color: #D400FF;
 }
 
+/* ====== IMAGE OPTIMIZATION ====== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  /* Enable hardware acceleration for images */
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Optimize logo image */
+.logo-img {
+  content-visibility: auto;
+  contain: layout style paint;
+}
+
+/* Optimize nav icons with size containment */
+.nav-icon {
+  content-visibility: auto;
+  will-change: opacity;
+}
+
 /* ====== BASE STYLES ====== */
 
 html,
